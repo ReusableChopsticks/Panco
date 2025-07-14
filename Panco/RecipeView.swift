@@ -20,7 +20,7 @@ struct RecipeView: View {
         
         Button("Sup") {
             Task {
-                await recipeManager.loadData(100)
+//                await recipeManager.loadData(100)
             }
         }
     }
