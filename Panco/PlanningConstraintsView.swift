@@ -133,20 +133,6 @@ struct PlanningConstraintsView: View {
                     .cornerRadius(15)
                     .padding()
                     
-                    //                // ⭐️ Continue button
-                    //                Button("Continue") {
-                    //                    //‼️ Add navigation to PlanningRecipeView
-                    //                }
-                    //                .foregroundColor(.pancoNeutral)
-                    //                .font(.headline)
-                    //                .padding()
-                    //                .frame(width: 180, height: 60)
-                    //                .background(.pancoLightGreen)
-                    //                .cornerRadius(20)
-                    //                .padding(.top,20)
-                    //                .padding(.bottom, 50)
-                    //                .shadow(radius: 5)
-                    
                     // ⭐️ Continue button
                     NavigationLink {
                         PlanningRecipeView()  // ← Destination
@@ -162,9 +148,6 @@ struct PlanningConstraintsView: View {
                             .padding(.bottom, 50)
                             .shadow(radius: 5)
                     }
-                    
-                    
-                    
                 }//VStack end
             }//ZStack end
         }//NavigationStack end
