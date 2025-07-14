@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct RecipeView: View {
+    @Environment(RecipeManager.self) var recipeManager: RecipeManager
+    
     let apiKey = URLQueryItem(name: "apiKey", value: "fca410445057430d98b609cbd5370dbf")
     let query = URLQueryItem(name: "query", value: "pasta")
     let excludeIngredients = URLQueryItem(name: "excludeIngredients", value: "chicken,bacon")
@@ -40,23 +42,15 @@ struct RecipeView: View {
             if let decodedResponse = try? JSONDecoder().decode(RecipesResponse.self, from: data) {
                 results = decodedResponse.results
             }
-            print(results)
+            recipeManager.recipes = results
+            recipeManager.printDebug()
+//            print(results)
         } catch {
             print("Invalid data")
         }
     }
 }
 
-struct RecipesResponse: Codable {
-    var results: [RecipesResult]
-}
-
-struct RecipesResult: Codable {
-    var id: Int
-    var title: String
-    var image: String
-    var imageType: String
-}
 
 #Preview {
     RecipeView()

@@ -8,15 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(RecipeManager.self) var recipeManager: RecipeManager
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            VStack {
+                Image(systemName: "globe")
+                    .imageScale(.large)
+                    .foregroundStyle(.tint)
+                Text("Hello, world!")
+                NavigationLink("Get Recipes") {
+                    RecipeView()
+                }
+                Divider()
+                Text("Recipes count: \(recipeManager.recipes.count)")
+                
+                List {
+                    
+                }
+            }
+            .padding()
         }
-        .padding()
     }
+        
 }
 
 #Preview {
