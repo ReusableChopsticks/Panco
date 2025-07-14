@@ -20,49 +20,53 @@ struct PlanningPortionView: View {
     ]
     
     var body: some View {
-        
-        // Background colour
-        ZStack {
-            Color(.pancoNeutral)
-                .ignoresSafeArea()
-            
-            // view components
-            VStack {
+        NavigationStack {
+            // Background colour
+            ZStack {
+                Color(.pancoNeutral)
+                    .ignoresSafeArea()
                 
-                ProgressView(value: 0.9)
-                    .frame(width: 160)
-                    .accentColor(Color.pancoGreen)
-                    .padding(.top, 20)
-                
-                Text("Portioning")
-                    .fontWeight(.bold)
-                    .font(.largeTitle)
-                    .padding(.trailing, 180)
-                    .padding(.top, 20)
-                    .padding(.bottom, 9)
-                
-                
-                ScrollView {
-                    LazyVGrid(columns: columns, spacing: 20) {
-                        ForEach(counters, id: \.id) { counter in
-                            counter
+                // view components
+                VStack {
+                    
+                    ProgressView(value: 0.9)
+                        .frame(width: 160)
+                        .accentColor(Color.pancoGreen)
+                        .padding(.top, 20)
+                    
+                    Text("Portioning")
+                        .fontWeight(.bold)
+                        .font(.largeTitle)
+                        .padding(.trailing, 180)
+                        .padding(.top, 20)
+                        .padding(.bottom, 9)
+                    
+                    
+                    ScrollView {
+                        LazyVGrid(columns: columns, spacing: 20) {
+                            ForEach(counters, id: \.id) { counter in
+                                counter
+                            }
                         }
                     }
-                }
-                Button("Continue") {
                     
+                    NavigationLink {
+                        PlanningSummaryView()
+                    } label: {
+                        Text("Continue")
+                            .foregroundColor(Color.pancoNeutral)
+                            .font(.headline)
+                            .frame(width: 180, height: 60)
+                            .background(Color.pancoLightGreen)
+                            .clipShape(.rect(cornerRadius: 20))
+                            .shadow(radius: 5)
+                    }
                 }
-                .foregroundColor(Color.pancoNeutral)
-                .font(.headline)
-                .frame(width: 180, height: 60)
-                .background(Color.pancoLightGreen)
-                .clipShape(.rect(cornerRadius: 20))
-                .shadow(radius: 5)
             }
-        }
-        .onAppear {
-            for index in 1...recipeCount {
-                counters.append(CounterView(id: index))
+            .onAppear {
+                for index in 1...recipeCount {
+                    counters.append(CounterView(id: index))
+                }
             }
         }
     }
