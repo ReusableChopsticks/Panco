@@ -8,14 +8,13 @@ import SwiftUI
 
 @main
 struct PancoApp: App {
-    
-    var recipeManager = RecipeManager()
+    @State var recipeManager = RecipeManager()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(recipeManager)
 //            RecipeView()
         }
-        .environment(recipeManager)
     }
 }

@@ -94,5 +94,5 @@ struct FavouritesView: View {
 }
 
 #Preview {
-    FavouritesView()
+    FavouritesView().environment(RecipeManager())
 }

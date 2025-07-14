@@ -53,5 +53,5 @@ struct RecipeView: View {
 
 
 #Preview {
-    RecipeView()
+    RecipeView().environment(RecipeManager())
 }

@@ -5,11 +5,12 @@
 //  Created by Erick Hadi on 14/7/2025.
 //
 
+import Observation
 import Foundation
 import SwiftUI
 
-@Observable
-class RecipeManager {
+
+@Observable class RecipeManager {
     var recipes: [RecipesResult] = []
  
     func printDebug() {

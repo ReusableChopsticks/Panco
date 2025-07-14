@@ -11,28 +11,29 @@ struct ContentView: View {
     @Environment(RecipeManager.self) var recipeManager: RecipeManager
 
     var body: some View {
-        NavigationStack {
-            VStack {
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundStyle(.tint)
-                Text("Hello, world!")
-                NavigationLink("Get Recipes") {
-                    RecipeView()
-                }
-                Divider()
-                Text("Recipes count: \(recipeManager.recipes.count)")
-                
-                List {
-                    
-                }
-            }
-            .padding()
-        }
+        NavigationTabView()
+//        NavigationStack {
+//            VStack {
+//                Image(systemName: "globe")
+//                    .imageScale(.large)
+//                    .foregroundStyle(.tint)
+//                Text("Hello, world!")
+//                NavigationLink("Get Recipes") {
+//                    RecipeView()
+//                }
+//                Divider()
+//                Text("Recipes count: \(recipeManager.recipes.count)")
+//                
+//                List {
+//                    
+//                }
+//            }
+//            .padding()
+//        }
     }
         
 }
 
 #Preview {
-    ContentView()
+    ContentView().environment(RecipeManager())
 }
