@@ -1,22 +1,27 @@
-// ✏️: code pending ; ‼️: code error
-
-// Version: 14 July 1.40PM
-// By Nikki
+// EmptyPlanView: Display user's empty meal plan
+// Created by: Nikki on 14 July
+// Last edited by: Nikki on 14 July 9.30PM (Sent)
 
 import SwiftUI
 
 struct EmptyPlanView: View {
+    
     var body: some View {
         NavigationStack {
+            
             ZStack {
                 
                 //Background color
-                Rectangle()
-                    .fill(.pancoNeutral)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .edgesIgnoringSafeArea(.all)
+                Color(.pancoNeutral)
+                            .ignoresSafeArea()
                 
                 VStack{
+                    Text("Plans")
+                        .fontWeight(.bold)
+                        .font(.largeTitle)
+                        .padding(.trailing, 200)
+                        .padding(.top, 50)
+                    
                     // ⭐️ Panco speech bubble
                     ZStack{
                         Image(systemName: "bubble.fill")
@@ -43,9 +48,7 @@ struct EmptyPlanView: View {
                         .frame(height:200)
                     
                     // ⭐️ New plan button
-//                    NavigationLink(destination: PlanningConstraintsView()) {
-                    
-                    Button(action: {}, label: {
+                    NavigationLink(destination: PlanningConstraintsView()) {
                         Text("New Plan")
                             .foregroundColor(.pancoNeutral)
                             .font(.headline)
@@ -56,11 +59,9 @@ struct EmptyPlanView: View {
                             .shadow(radius: 5)
                             .padding(.top, 50)
                     }
-                           
-                    )
+                    
                 }
             }//VStack end
-            .navigationTitle(Text("Plans"))
         }//ZStack end
     }//body end
 }//Struct end
