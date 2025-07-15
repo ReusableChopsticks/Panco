@@ -2,7 +2,7 @@ import SwiftUI
 
 
 struct PlanningSummaryView: View {
-    
+    @Environment(RecipeManager.self) var recipeManager: RecipeManager
     @Binding var rootIsActive : Bool
     
     var body: some View {
@@ -13,12 +13,6 @@ struct PlanningSummaryView: View {
                 .ignoresSafeArea()
             
             VStack(alignment: .leading) {
-                //                Button("Back", systemImage: "chevron.backward") {}
-                //                    .foregroundColor(.pancoGreen)
-                //                    .fontWeight(.semibold)
-                //                    .padding(.top, 30)
-                //                    .padding(.leading)
-                
                 Text("Summary")
                     .fontWeight(.bold)
                     .font(.largeTitle)
@@ -27,25 +21,30 @@ struct PlanningSummaryView: View {
                 ZStack(alignment: .bottom) {
                     ScrollView {
                         LazyVStack(spacing: 20) {
-                            RecipeCardView(imageName: "Recipe 1", title: "Recipe 1", count: 0)
-                            RecipeCardView(imageName: "Recipe 2", title: "Recipe 2", count: 0)
-                            RecipeCardView(imageName: "Recipe 3", title: "Recipe 3", count: 0)
+                            
+                            ForEach(recipeManager.mealPlan, id: \.id) { portion in
+                                RecipeCardView(imageName: portion.recipe.image, title: portion.recipe.title, count: portion.portion)
+                            }
+                            
+//                            RecipeCardView(imageName: "Recipe 1", title: "Recipe 1", count: 0)
+//                            RecipeCardView(imageName: "Recipe 2", title: "Recipe 2", count: 0)
+//                            RecipeCardView(imageName: "Recipe 3", title: "Recipe 3", count: 0)
                         }
                         .padding(.horizontal)
                         .padding(.bottom, 100)
                     }
                     
-//                    // Floating button above scroll
-//                    Button("Save") {}
-//                        .foregroundColor(.pancoNeutral)
-//                        .font(.headline)
-//                        .padding()
-//                        .frame(width: 180, height: 60)
-//                        .background(.pancoGreen)
-//                        .cornerRadius(20)
-//                        .shadow(radius: 5)
-//                        .padding(.horizontal, 100)
-//                        .padding(.bottom, 30)
+                    //                    // Floating button above scroll
+                    //                    Button("Save") {}
+                    //                        .foregroundColor(.pancoNeutral)
+                    //                        .font(.headline)
+                    //                        .padding()
+                    //                        .frame(width: 180, height: 60)
+                    //                        .background(.pancoGreen)
+                    //                        .cornerRadius(20)
+                    //                        .shadow(radius: 5)
+                    //                        .padding(.horizontal, 100)
+                    //                        .padding(.bottom, 30)
                     
                     NavigationLink() {
                         PlanningGroceryView(rootIsActive: $rootIsActive)
@@ -75,23 +74,27 @@ struct RecipeCardView: View {
         
         HStack {
             
-            Image(imageName)
-                .resizable()
-                .frame(width: 150, height: 150)
-                .cornerRadius(20)
-                .padding(20)
+            AsyncImage(url: URL(string: imageName)) { img in
+                img.resizable()
+            } placeholder: {
+                Color.gray.opacity(0.3)
+            }
+            .frame(width: 150, height: 150)
+            .cornerRadius(20)
+//            .padding(.trailing, 20)
             
             VStack {
                 Text(title)
                     .font(.title3)
                     .frame(maxWidth: .infinity, alignment: .trailing)
                 
+                Spacer()
+                
                 Text("\(count)")
-                    .font(.system(size: 50))
+                    .font(.system(size: 31))
                     .fontWeight(.bold)
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-            }
-            .padding(.trailing, 20)
+                    .frame(maxWidth: .infinity, alignment: .bottomTrailing)
+            }.padding(.vertical, 11).padding(.trailing, 20)
         }
         .background(.pancoLightRed.opacity(0.15))
         .cornerRadius(15)
@@ -100,5 +103,5 @@ struct RecipeCardView: View {
 }
 
 #Preview {
-    PlanningSummaryView(rootIsActive: .constant(false))
+    PlanningSummaryView(rootIsActive: .constant(false)).environment(RecipeManager())
 }

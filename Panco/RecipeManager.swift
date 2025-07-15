@@ -13,7 +13,9 @@ import SwiftUI
 @Observable class RecipeManager {
     private let API_KEY = "5808fdadcfa04697abafb3f0dea869eb"
     
-    var recipes = [RecipesResult]()
+    static var sampleRecipes: [RecipesResult] = [Panco.RecipesResult(id: 716406, title: "Asparagus and Pea Soup: Real Convenience Food", image: "https://img.spoonacular.com/recipes/716406-312x231.jpg", imageType: "jpg"), Panco.RecipesResult(id: 716426, title: "Cauliflower, Brown Rice, and Vegetable Fried Rice", image: "https://img.spoonacular.com/recipes/716426-312x231.jpg", imageType: "jpg"), Panco.RecipesResult(id: 640941, title: "Crunchy Brussels Sprouts Side Dish", image: "https://img.spoonacular.com/recipes/640941-312x231.jpg", imageType: "jpg"), Panco.RecipesResult(id: 756814, title: "Powerhouse Almond Matcha Superfood Smoothie", image: "https://img.spoonacular.com/recipes/756814-312x231.jpg", imageType: "jpg"), Panco.RecipesResult(id: 715769, title: "Broccolini Quinoa Pilaf", image: "https://img.spoonacular.com/recipes/715769-312x231.jpg", imageType: "jpg")]
+    
+    var recipes: [RecipesResult] = sampleRecipes
     var mealPlan: [PortionModel] = PortionModel.sampleData
     var history: [MealPlanHistoryModel] = []
     
@@ -64,7 +66,7 @@ import SwiftUI
 //            by default we give everything a portion of 1 first
 //            this gets displayed in PlanningPortionView
             mealPlan = decodedResponse.results.map { PortionModel(recipe: $0, portion: 1) }
-            print(mealPlan)
+            print(recipes)
             
             print("✅ Loaded \(recipes.count) recipes")
         } catch {
