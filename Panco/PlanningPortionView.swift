@@ -19,8 +19,10 @@ struct PlanningPortionView: View {
         GridItem(.fixed(50), spacing:2)
     ]
     
+    @Binding var rootIsActive : Bool
+    
     var body: some View {
-        NavigationStack {
+   
             // Background colour
             ZStack {
                 Color(.pancoNeutral)
@@ -50,8 +52,8 @@ struct PlanningPortionView: View {
                         }
                     }
                     
-                    NavigationLink {
-                        PlanningSummaryView()
+                    NavigationLink() {
+                        PlanningSummaryView(rootIsActive: $rootIsActive)
                     } label: {
                         Text("Continue")
                             .foregroundColor(Color.pancoNeutral)
@@ -70,7 +72,7 @@ struct PlanningPortionView: View {
             }
         }
     }
-}
+
 
 struct CounterView: View {
     let id: Int
@@ -114,6 +116,6 @@ struct CounterView: View {
 }
 
 #Preview {
-    PlanningPortionView(recipeCount: 3)
+    PlanningPortionView(recipeCount: 3,rootIsActive: .constant(false))
 }
 

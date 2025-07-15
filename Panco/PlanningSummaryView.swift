@@ -2,6 +2,9 @@ import SwiftUI
 
 
 struct PlanningSummaryView: View {
+    
+    @Binding var rootIsActive : Bool
+    
     var body: some View {
         
         ZStack {
@@ -44,8 +47,8 @@ struct PlanningSummaryView: View {
 //                        .padding(.horizontal, 100)
 //                        .padding(.bottom, 30)
                     
-                    NavigationLink {
-                        PlanningSummaryView()
+                    NavigationLink() {
+                        PlanningGroceryView(rootIsActive: $rootIsActive)
                     } label: {
                         Text("waaaah")
                             .foregroundColor(Color.pancoNeutral)
@@ -97,5 +100,5 @@ struct RecipeCardView: View {
 }
 
 #Preview {
-    PlanningSummaryView()
+    PlanningSummaryView(rootIsActive: .constant(false))
 }

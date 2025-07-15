@@ -7,6 +7,7 @@ import SwiftUI
 
 struct PlanningRecipeView: View {
     
+    
     let columns = [
         GridItem(.fixed(150), spacing: 40),
         GridItem(.fixed(150), spacing: 40)
@@ -18,8 +19,9 @@ struct PlanningRecipeView: View {
     
     @State var selectedImages: Set<String> = []
     
+    @Binding var rootIsActive : Bool
+
     var body: some View {
-        NavigationStack {
             ZStack {
                 // Background color
                 Color(.pancoNeutral)
@@ -173,7 +175,7 @@ struct PlanningRecipeView: View {
                     //‼️ NAVIGATE to PlanningPortionView
                     if (selectedImages.count > 0) {
                         NavigationLink {
-                            PlanningPortionView(recipeCount: selectedImages.count)
+                            PlanningPortionView(recipeCount: selectedImages.count, rootIsActive: $rootIsActive)
                         } label: {
                             Text("Continue")
                         }
@@ -201,11 +203,11 @@ struct PlanningRecipeView: View {
             }
         }
     }
-}
+
 
 
 
 
 #Preview {
-    PlanningRecipeView()
+    PlanningRecipeView(rootIsActive: .constant(false))
 }

@@ -5,6 +5,7 @@
 import SwiftUI
 
 struct EmptyPlanView: View {
+    
     @State var isActive : Bool = false
     
     var body: some View {
@@ -61,7 +62,8 @@ struct EmptyPlanView: View {
 //                            .padding(.top, 50)
 //                    }
                     
-                    NavigationLink(destination: PlanningConstraintsView(), isActive: $isActive) {
+                    NavigationLink("A", isActive: $isActive) {
+                        PlanningConstraintsView(rootIsActive: $isActive) 
                         Text("New Plan")
                             .foregroundColor(.pancoNeutral)
                             .font(.headline)

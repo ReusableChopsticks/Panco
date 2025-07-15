@@ -11,11 +11,10 @@ struct PlanningConstraintsView: View {
     //    @State private var removeCount: Int = 0
     //    @State private var addCount: Int = 0
     
-    
+    @Binding var rootIsActive : Bool
+
     var body: some View {
-        NavigationStack {
-//            testing pull with jannalyn yaaaaay
-            
+ 
             ZStack {
                 Color(.pancoNeutral)
                     .ignoresSafeArea()
@@ -134,9 +133,9 @@ struct PlanningConstraintsView: View {
                     .padding()
                     
                     // ⭐️ Continue button
-                    NavigationLink {
-                        PlanningRecipeView()  // ← Destination
-                    } label: {
+                    NavigationLink() {
+                               PlanningRecipeView(rootIsActive: $rootIsActive)
+                    }label: {
                         Text("Continue")      // ← Label with button styling
                             .foregroundColor(.pancoNeutral)
                             .font(.headline)
@@ -147,13 +146,13 @@ struct PlanningConstraintsView: View {
                             .padding(.top, 20)
                             .padding(.bottom, 50)
                             .shadow(radius: 5)
+                        
                     }
                 }//VStack end
             }//ZStack end
-        }//NavigationStack end
     } //body end
 }//struct end
 
 #Preview {
-    PlanningConstraintsView()
+    PlanningConstraintsView(rootIsActive: .constant(false))
 }
