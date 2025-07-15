@@ -19,11 +19,11 @@ struct PlanningRecipeView: View {
             
             VStack(spacing: 16) {
 //                // Load button for testing to reduce unecessary API calls
-//                Button("Load Recipes") {
-//                    Task {
-//                        await recipeManager.loadData(maxDuration: 30)
-//                    }
-//                }
+                Button("Load Recipes") {
+                    Task {
+                        await recipeManager.loadData(maxDuration: 30)
+                    }
+                }
                 
                 HeaderView()
                 
@@ -43,7 +43,8 @@ struct PlanningRecipeView: View {
                 rootIsActive: $rootIsActive
             )
         }.task {
-            await recipeManager.loadData(maxDuration: 30)
+// TODO:            replace with previous screen data!
+//            await recipeManager.loadData(maxDuration: 60)
         }
     }
 }

@@ -11,6 +11,8 @@ import SwiftUI
 
 
 @Observable class RecipeManager {
+    private let API_KEY = "5808fdadcfa04697abafb3f0dea869eb"
+    
     var recipes = [RecipesResult]()
     var mealPlan: [PortionModel] = []
     var history: [MealPlanHistoryModel] = []
@@ -31,7 +33,7 @@ import SwiftUI
         }
         
         var queryItems: [URLQueryItem] = []
-        queryItems.append(URLQueryItem(name: "apiKey", value: "fca410445057430d98b609cbd5370dbf"))
+        queryItems.append(URLQueryItem(name: "apiKey", value: API_KEY))
         queryItems.append(URLQueryItem(name: "maxReadyTime", value: "\(maxDuration)"))
 
         if !allergies.isEmpty {
@@ -59,6 +61,10 @@ import SwiftUI
             
             // ✅ Update the published recipes array
             recipes = decodedResponse.results
+//            by default we give everything a portion of 1 first
+//            this gets displayed in PlanningPortionView
+            mealPlan = decodedResponse.results.map { PortionModel(recipe: $0, portion: 1) }
+            print(mealPlan)
             
             print("✅ Loaded \(recipes.count) recipes")
         } catch {

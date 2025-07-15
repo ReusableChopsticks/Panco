@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct PlanningPortionView: View {
+    @Environment(RecipeManager.self) var recipeManager: RecipeManager
     
-    let recipeCount: Int
     @State private var counters: [CounterView] = []
+    let recipeCount: Int
     
     let columns = [
         GridItem(.fixed(140), spacing:15),
@@ -47,8 +48,12 @@ struct PlanningPortionView: View {
                     
                     ScrollView {
                         LazyVGrid(columns: columns, spacing: 20) {
-                            ForEach(counters, id: \.id) { counter in
-                                counter
+//                            ForEach(counters, id: \.id) { counter in
+//                                counter
+//                            }
+                            
+                            ForEach(recipeManager.mealPlan, id: \.id) { portion in
+                                CounterView(recipePortion: portion)
                             }
                         }
                     }
@@ -66,22 +71,24 @@ struct PlanningPortionView: View {
                     }
                 }
             }
-            .onAppear {
-                for index in 1...recipeCount {
-                    counters.append(CounterView(id: index))
-                }
-            }
+//            .onAppear {
+//                for index in 1...recipeCount {
+//                    counters.append(CounterView(id: index))
+//                }
+//            }
         }
     }
 
 
 struct CounterView: View {
-    let id: Int
-    @State var count: Int = 0
+//    let id: Int
+    let recipePortion: PortionModel
+    @State private var count: Int = 0
     
     var body: some View {
         // need to replace with images from api
         ZStack{
+            Text("\(recipePortion.recipe.title)")
             Image("Recipe 1")
                 .resizable()
                 .frame(width: 150, height: 150)
@@ -125,6 +132,6 @@ struct CounterView: View {
 }
 
 #Preview {
-    PlanningPortionView(recipeCount: 3,rootIsActive: .constant(false))
+    PlanningPortionView(recipeCount: 3,rootIsActive: .constant(false)).environment(RecipeManager())
 }
 

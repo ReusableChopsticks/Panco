@@ -6,8 +6,9 @@ import SwiftUI
 
 struct PlanningConstraintsView: View {
     
-    
-    @State var maxCookingTime: Int = 1 //minutes
+    let MIN_COOKING_TIME: Int = 10
+    let MAX_COOKING_TIME: Int = 240
+    @State var maxCookingTime: Int = 240 //minutes
     @State var numRecipes: Int = 0
     //    @State private var removeCount: Int = 0
     //    @State private var addCount: Int = 0
@@ -115,7 +116,7 @@ struct PlanningConstraintsView: View {
                         Picker("Max Cooking Time", selection: $maxCookingTime)
                         {
                             // Generate any range you like—here, 1 min up to 120 min.
-                            ForEach(1...120, id: \.self)
+                            ForEach(MIN_COOKING_TIME...MAX_COOKING_TIME, id: \.self)
                             {
                                 minute in
                                 Text("\(minute)").tag(minute)
