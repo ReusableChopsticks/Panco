@@ -22,8 +22,9 @@ struct PlanningRecipeView: View {
     
     @State var selectedImages: Set<String> = []
     
+    @Binding var rootIsActive : Bool
+
     var body: some View {
-        NavigationStack {
             ZStack {
                 // Background color
                 Color(.pancoNeutral)
@@ -32,7 +33,6 @@ struct PlanningRecipeView: View {
                 
                 
                 VStack(alignment: .leading , spacing: 16) {
-                    Text("\(selectedImages.count)")
                     VStack{ // Page title and progress bar group
                         HStack {
                             Spacer()
@@ -177,7 +177,7 @@ struct PlanningRecipeView: View {
                     //‼️ NAVIGATE to PlanningPortionView
                     if (selectedImages.count > 0) {
                         NavigationLink {
-                            PlanningPortionView(recipeCount: selectedImages.count)
+                            PlanningPortionView(recipeCount: selectedImages.count, rootIsActive: $rootIsActive)
                         } label: {
                             Text("Continue")
                         }
@@ -205,11 +205,11 @@ struct PlanningRecipeView: View {
             }
         }
     }
-}
+
 
 
 
 
 #Preview {
-    PlanningRecipeView().environment(RecipeManager())
+    PlanningRecipeView(rootIsActive: .constant(false)).environment(RecipeManager())
 }

@@ -1,9 +1,3 @@
-// FilledPlanView: Display user's current meal plan.
-// Created by: Nikki on 14 July
-// Last edited by: Nikki on 14 July 9.30PM (Sent)
-// ‼️ P.S this view should override the EmptyPlanView
-
-
 import SwiftUI
 
 // MARK: - Helpers
@@ -18,7 +12,9 @@ private extension Double {
 }
 
 /// Makes `String` usable with `.popover(item:)`
-extension String: @retroactive Identifiable { public var id: String { self } }
+extension String: Identifiable {
+    public var id: String { self }
+}
 
 // MARK: - Data model for the pop‑over list
 
@@ -32,21 +28,19 @@ struct Ingredient: Identifiable {
 // MARK: - Main View
 
 struct FilledPlanView: View {
-    // Inputs you’ll later fetch from other screens
     var selectedRecipes: [String] = ["Chicken Rice", "R2", "R3", "R4", "R5"]
-    let groceryList:   String     // placeholder
-    let chosenRecipes: String     // placeholder
+    let groceryList: String
+    let chosenRecipes: String
     
-    // Grid layout
+    @Binding var rootIsActive: Bool
+    
     private let columns = [
         GridItem(.fixed(150), spacing: 40),
         GridItem(.fixed(150), spacing: 40)
     ]
     
-    // Which card is tapped (nil → no pop‑over)
     @State private var selectedRecipeName: String?
     
-    // Sample ingredients (use real data per recipe later)
     private let sampleIngredients: [Ingredient] = [
         .init(name: "Chicken",   amount: 200, unit: "g"),
         .init(name: "Rice",      amount: 1,   unit: "cup"),
@@ -69,20 +63,12 @@ struct FilledPlanView: View {
                 newPlanButton
             }
         }
-        // ONE pop‑over attached to the whole screen
         .popover(item: $selectedRecipeName) { _ in
             ingredientsPopover
         }
     }
-}
 
-// MARK: - Sub‑views
-
-private extension FilledPlanView {
-    // Top “Plan” title + pencil
     var header: some View {
-        
-        // ⭐️ Page title items
         HStack {
             Text("Plans")
                 .fontWeight(.bold)
@@ -90,60 +76,63 @@ private extension FilledPlanView {
                 .padding(.trailing, 200)
             
             NavigationLink {
-                PlanningRecipeView()                 // ← destination view
+                PlanningConstraintsView(rootIsActive: $rootIsActive)
             } label: {
-                Image(systemName: "pencil")          // ← pencil icon
+                Image(systemName: "pencil")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 20)
                     .foregroundStyle(.pancoRed)
             }
-            .buttonStyle(.plain)                     // (optional) removes default blue tint
+            .buttonStyle(.plain)
         }
         .padding(.top, 50)
     }
-    
-    // ⭐️ Red grocery‑list pill
+
     var groceryListTab: some View {
-        ZStack {
-            NavigationLink(destination: PlanningConstraintsView()) { //‼️ REPLACE "PlanningConstraintsView" with "PlanningGroceryView"
-                Text("  Grocery List")
-                    .foregroundColor(.pancoNeutral)
-                    .font(.title)
-                    .fontWeight(.semibold)
-                    .frame(width: 350, height: 45, alignment: .leading)
-                    .background(.pancoLightRed)
-                    .cornerRadius(30)
-                    .shadow(radius: 5)
-                    .padding(.top, 20)
-            }
-            
-            Image(systemName: "chevron.compact.forward")
-                .resizable()
-                .frame(width:15, height: 20)
-                .foregroundStyle(.pancoNeutral)
-                .padding(.leading, 250)
+        ZStack(alignment: .leading) {
+            NavigationLink {
+                PlanningGroceryView(rootIsActive: $rootIsActive)
+            } label: {
+                HStack {
+                    Text("Grocery List")
+                        .foregroundColor(.pancoNeutral)
+                        .font(.title)
+                        .fontWeight(.semibold)
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.compact.forward")
+                        .resizable()
+                        .frame(width: 15, height: 20)
+                        .foregroundStyle(.pancoNeutral)
+                    
+                    // Example logic: show exclamation mark only if list not empty
+                    if !groceryList.isEmpty {
+                        Image(systemName: "exclamationmark.circle.fill")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .foregroundStyle(.pancoRed)
+                    }
+                }
+                .padding(.horizontal)
+                .frame(height: 45)
+                .background(.pancoLightRed)
+                .cornerRadius(30)
+                .shadow(radius: 5)
                 .padding(.top, 20)
-            
-            // ‼️ SHOW exclamation mark only if grocery list isn’t empty (try IF statements?)
-            Image(systemName: "exclamationmark.circle.fill")
-                .resizable()
-                .frame(width: 30, height: 30)
-                .foregroundStyle(.pancoRed)
-                .padding(.leading, 300)
-                .padding(.top, -30)
+            }
         }
+        .padding(.horizontal)
     }
-    
-    // ⭐️ Two‑column grid of tappable recipe cards
+
     var recipeGrid: some View {
-        LazyVGrid(columns: columns, spacing: 4) {
+        LazyVGrid(columns: columns, spacing: 20) {
             ForEach(selectedRecipes, id: \.self) { name in
                 Button {
-                    selectedRecipeName = name       // triggers pop‑over
+                    selectedRecipeName = name
                 } label: {
                     ZStack(alignment: .bottomLeading) {
-                        // Placeholder (replace with Image(name) when ready)
                         RoundedRectangle(cornerRadius: 20)
                             .fill(Color.gray.opacity(0.3))
                             .frame(width: 170, height: 170)
@@ -161,38 +150,41 @@ private extension FilledPlanView {
                 .buttonStyle(.plain)
             }
         }
+        .padding()
     }
+
+//    var newPlanButton: some View {
+//        NavigationLink {
+//            PlanningConstraintsView(rootIsActive: $rootIsActive)
+//        } label: {
+//            Text("New Plan")
+//                .foregroundColor(.pancoNeutral)
+//                .font(.headline)
+//                .padding()
+//                .frame(width: 180, height: 60)
+//                .background(.pancoRed)
+//                .cornerRadius(20)
+//                .shadow(radius: 5)
+//        }
+//        .padding(.top, 20)
+//    }
     
-    // ⭐️ Bottom “New Plan” button
     var newPlanButton: some View {
-        NavigationLink {
-            PlanningConstraintsView()          // ← destination screen
-        } label: {
-            Text("New Plan")                   // ← label that looks like a button
-                .foregroundColor(.pancoNeutral)
-                .font(.headline)
-                .padding()
-                .frame(width: 180, height: 60)
-                .background(.pancoRed)
-                .cornerRadius(20)
-                .shadow(radius: 5)
+        Button("tets") {
+            rootIsActive.toggle()
         }
-        .padding(.top, 20)                     // outer spacing
     }
-    
-    // Body of the pop‑over
+
     var ingredientsPopover: some View {
         VStack(alignment: .leading, spacing: 8) {
-            // Optional header: Text(selectedRecipeName ?? "").font(.headline)
-            
             ForEach(sampleIngredients) { item in
                 Text("\(item.name): \(item.amount.clean) \(item.unit)")
             }
-            
             Divider()
-            
-            Button("Close") { selectedRecipeName = nil }
-                .padding(.top, 8)
+            Button("Close") {
+                selectedRecipeName = nil
+            }
+            .padding(.top, 8)
         }
         .padding()
     }
@@ -202,6 +194,10 @@ private extension FilledPlanView {
 
 #Preview {
     NavigationStack {
-        FilledPlanView(groceryList: "", chosenRecipes: "")
+        FilledPlanView(
+            groceryList: "Rice, Eggs",
+            chosenRecipes: "Chicken Rice, Soup",
+            rootIsActive: .constant(true)
+        )
     }
 }
