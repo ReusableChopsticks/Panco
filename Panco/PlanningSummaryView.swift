@@ -50,7 +50,7 @@ struct PlanningSummaryView: View {
                     NavigationLink() {
                         PlanningGroceryView(rootIsActive: $rootIsActive)
                     } label: {
-                        Text("waaaah")
+                        Text("Continue")
                             .foregroundColor(Color.pancoNeutral)
                             .font(.headline)
                             .frame(width: 180, height: 60)

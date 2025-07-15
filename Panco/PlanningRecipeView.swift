@@ -30,7 +30,6 @@ struct PlanningRecipeView: View {
                 
                 
                 VStack(alignment: .leading , spacing: 16) {
-                    Text("\(selectedImages.count)")
                     VStack{ // Page title and progress bar group
                         HStack {
                             Spacer()

@@ -19,6 +19,7 @@ struct PlanningPortionView: View {
         GridItem(.fixed(50), spacing:2)
     ]
     
+    
     @Binding var rootIsActive : Bool
     
     var body: some View {
@@ -80,10 +81,18 @@ struct CounterView: View {
     
     var body: some View {
         // need to replace with images from api
-        RoundedRectangle(cornerRadius: 20)
-            .fill(Color.black.opacity(0.4))
-            .frame(width: 150, height: 150)
-            .padding(.trailing, 20)
+        ZStack{
+            Image("Recipe 1")
+                .resizable()
+                .frame(width: 150, height: 150)
+                .cornerRadius(20)
+                .padding(.trailing, 20)
+            
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.black.opacity(0.4))
+                .frame(width: 150, height: 150)
+                .padding(.trailing, 20)
+        }
         
         Button {
             if count > 0 { count -= 1

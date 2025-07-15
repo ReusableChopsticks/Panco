@@ -21,8 +21,8 @@ struct EmptyPlanView: View {
                     Text("Plans")
                         .fontWeight(.bold)
                         .font(.largeTitle)
-                        .padding(.trailing, 200)
-                        .padding(.top, 50)
+                        .padding(.trailing, 270)
+                        .padding(.top, -75)
                     
                     // ⭐️ Panco speech bubble
                     ZStack{
@@ -42,6 +42,7 @@ struct EmptyPlanView: View {
                             .padding(.trailing,-100)
                             
                     }
+                    .padding(.trailing, 30)
                     
                     // ⭐️ Panco image
                     Image("pancoPNG")
@@ -49,31 +50,21 @@ struct EmptyPlanView: View {
                         .scaledToFit()
                         .frame(height:200)
                     
-//                    // ⭐️ New plan button
-//                    NavigationLink(destination: PlanningConstraintsView()) {
-//                        Text("New Plan")
-//                            .foregroundColor(.pancoNeutral)
-//                            .font(.headline)
-//                            .padding()
-//                            .frame(width: 180, height: 60)
-//                            .background(.pancoRed)
-//                            .cornerRadius(20)
-//                            .shadow(radius: 5)
-//                            .padding(.top, 50)
-//                    }
+
                     
-                    NavigationLink("A", isActive: $isActive) {
-                        PlanningConstraintsView(rootIsActive: $isActive) 
+                    NavigationLink {
+                        PlanningConstraintsView(rootIsActive: $isActive)
+                    } label: {
                         Text("New Plan")
                             .foregroundColor(.pancoNeutral)
                             .font(.headline)
                             .padding()
                             .frame(width: 180, height: 60)
-                            .background(.pancoRed)
-                            .cornerRadius(20)
+                            .background(Color.pancoRed)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
                             .shadow(radius: 5)
-                            .padding(.top, 50)
                     }
+                    .padding(.top, 105 )
                     
                     
                     
