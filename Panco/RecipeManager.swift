@@ -11,7 +11,7 @@ import SwiftUI
 
 
 @Observable class RecipeManager {
-    var recipes: [RecipesResult] = []
+    var recipes = [RecipesResult]()
     var mealPlan: [PortionModel] = []
     var history: [MealPlanHistoryModel] = []
     
@@ -24,10 +24,10 @@ import SwiftUI
     }
     
 //    called in PlanningRecipeView
-    func loadData(maxDuration: Int) async -> [RecipesResult] {
+    func loadData(maxDuration: Int) async {
         guard var urlComponents = URLComponents(string: "https://api.spoonacular.com/recipes/complexSearch") else {
             print("Invalid URL")
-            return []
+            return
         }
         
         var queryItems: [URLQueryItem] = []
@@ -48,7 +48,7 @@ import SwiftUI
         
         guard let finalURL = urlComponents.url else {
             print("Failed to construct URL")
-            return []
+            return
         }
         
         print("Fetching recipes: \(finalURL)")
@@ -56,12 +56,17 @@ import SwiftUI
         do {
             let (data, _) = try await URLSession.shared.data(from: finalURL)
             let decodedResponse = try JSONDecoder().decode(RecipesResponse.self, from: data)
-            return decodedResponse.results
+            
+            // ✅ Update the published recipes array
+            recipes = decodedResponse.results
+            
+            print("✅ Loaded \(recipes.count) recipes")
         } catch {
-            print("Error fetching data: \(error)")
-            return []
+            print("❌ Error fetching data: \(error.localizedDescription)")
+            recipes = [] // clear recipes on failure
         }
     }
+
     
     func saveCurrentMealPlanToHistory() {
         let newHistoryEntry = MealPlanHistoryModel(history: mealPlan)

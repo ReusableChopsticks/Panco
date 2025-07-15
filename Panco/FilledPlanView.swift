@@ -12,7 +12,7 @@ private extension Double {
 }
 
 /// Makes `String` usable with `.popover(item:)`
-extension String: Identifiable {
+extension String: @retroactive Identifiable {
     public var id: String { self }
 }
 
