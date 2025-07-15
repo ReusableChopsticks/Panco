@@ -5,9 +5,10 @@
 import SwiftUI
 
 struct EmptyPlanView: View {
+    @State var isActive : Bool = false
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             
             ZStack {
                 
@@ -47,8 +48,20 @@ struct EmptyPlanView: View {
                         .scaledToFit()
                         .frame(height:200)
                     
-                    // ⭐️ New plan button
-                    NavigationLink(destination: PlanningConstraintsView()) {
+//                    // ⭐️ New plan button
+//                    NavigationLink(destination: PlanningConstraintsView()) {
+//                        Text("New Plan")
+//                            .foregroundColor(.pancoNeutral)
+//                            .font(.headline)
+//                            .padding()
+//                            .frame(width: 180, height: 60)
+//                            .background(.pancoRed)
+//                            .cornerRadius(20)
+//                            .shadow(radius: 5)
+//                            .padding(.top, 50)
+//                    }
+                    
+                    NavigationLink(destination: PlanningConstraintsView(), isActive: $isActive) {
                         Text("New Plan")
                             .foregroundColor(.pancoNeutral)
                             .font(.headline)
@@ -59,6 +72,8 @@ struct EmptyPlanView: View {
                             .shadow(radius: 5)
                             .padding(.top, 50)
                     }
+                    
+                    
                     
                 }
             }//VStack end
