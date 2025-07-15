@@ -9,29 +9,37 @@ import SwiftUI
 
 struct NavigationTabView: View {
     @Environment(RecipeManager.self) var recipeManager: RecipeManager
+    @State private var isOnboarding = true
     
     var body: some View {
-        TabView {
-            Tab("Plan", systemImage: "text.document") {
-                EmptyPlanView().environment(recipeManager)
+        if isOnboarding {
+            Button("Finish onboarding") {
+                isOnboarding = false
             }
-            Tab("Favourites", systemImage: "heart") {
-                FavouritesView().environment(recipeManager)
-            }
-            
-            Tab("History", systemImage: "clock") {
-                ProfileHistoryView().environment(recipeManager)
-            }
-            
-            Tab("Preferences", systemImage: "person.fill") {
-                FavouritesView().environment(recipeManager)
+        } else {
+            TabView {
+                Tab("Plan", systemImage: "text.document") {
+                    EmptyPlanView().environment(recipeManager)
+                }
+                Tab("Favourites", systemImage: "heart") {
+                    FavouritesView().environment(recipeManager)
+                }
+                
+                Tab("History", systemImage: "clock") {
+                    ProfileHistoryView().environment(recipeManager)
+                }
+                
+                Tab("Preferences", systemImage: "person.fill") {
+                    FavouritesView().environment(recipeManager)
+                }
             }
         }
+        
     }
 }
 
 
 
 #Preview {
-    NavigationTabView()
+    NavigationTabView().environment(RecipeManager())
 }

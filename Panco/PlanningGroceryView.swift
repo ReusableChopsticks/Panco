@@ -5,7 +5,7 @@ struct GroceryItem: Identifiable {
     let id = UUID()
     let quantity: String
     let name: String
-    var isChecked: Bool = false
+    var isChecked: Bool = true
 }
 
 // Row View

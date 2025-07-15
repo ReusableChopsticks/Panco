@@ -25,10 +25,6 @@ struct PlanningSummaryView: View {
                             ForEach(recipeManager.mealPlan, id: \.id) { portion in
                                 RecipeCardView(imageName: portion.recipe.image, title: portion.recipe.title, count: portion.portion)
                             }
-                            
-//                            RecipeCardView(imageName: "Recipe 1", title: "Recipe 1", count: 0)
-//                            RecipeCardView(imageName: "Recipe 2", title: "Recipe 2", count: 0)
-//                            RecipeCardView(imageName: "Recipe 3", title: "Recipe 3", count: 0)
                         }
                         .padding(.horizontal)
                         .padding(.bottom, 100)
@@ -56,6 +52,9 @@ struct PlanningSummaryView: View {
                             .background(Color.pancoLightGreen)
                             .clipShape(.rect(cornerRadius: 20))
                             .shadow(radius: 5)
+                    }.onTapGesture {
+                        let newHistory: MealPlanHistoryModel = MealPlanHistoryModel(id: UUID(), date: Date(), history: recipeManager.mealPlan)
+                        recipeManager.history.append(newHistory)
                     }
                 }
             }
