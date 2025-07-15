@@ -8,21 +8,23 @@
 import SwiftUI
 
 struct NavigationTabView: View {
+    @Environment(RecipeManager.self) var recipeManager: RecipeManager
+    
     var body: some View {
         TabView {
             Tab("Plan", systemImage: "text.document") {
-                EmptyPlanView()
+                EmptyPlanView().environment(recipeManager)
             }
             Tab("Favourites", systemImage: "heart") {
-                FavouritesView()
+                FavouritesView().environment(recipeManager)
             }
             
             Tab("History", systemImage: "clock") {
-                ProfileHistoryView()
+                ProfileHistoryView().environment(recipeManager)
             }
             
             Tab("Preferences", systemImage: "person.fill") {
-                FavouritesView()
+                FavouritesView().environment(recipeManager)
             }
         }
     }

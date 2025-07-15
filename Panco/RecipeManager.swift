@@ -23,7 +23,7 @@ import SwiftUI
         print("DEBUG: \(recipes)")
     }
     
-//    called in PlanningConstraintsView
+//    called in PlanningRecipeView
     func loadData(maxDuration: Int) async -> [RecipesResult] {
         guard var urlComponents = URLComponents(string: "https://api.spoonacular.com/recipes/complexSearch") else {
             print("Invalid URL")
@@ -31,7 +31,7 @@ import SwiftUI
         }
         
         var queryItems: [URLQueryItem] = []
-        queryItems.append(URLQueryItem(name: "apiKey", value: "YOUR_API_KEY"))
+        queryItems.append(URLQueryItem(name: "apiKey", value: "fca410445057430d98b609cbd5370dbf"))
         queryItems.append(URLQueryItem(name: "maxReadyTime", value: "\(maxDuration)"))
 
         if !allergies.isEmpty {
@@ -66,6 +66,10 @@ import SwiftUI
     func saveCurrentMealPlanToHistory() {
         let newHistoryEntry = MealPlanHistoryModel(history: mealPlan)
         history.append(newHistoryEntry)
+    }
+    
+    func debugLog() {
+        print(mealPlan)
     }
 }
 

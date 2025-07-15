@@ -75,5 +75,5 @@ struct EmptyPlanView: View {
 }//Struct end
 
 #Preview {
-    EmptyPlanView()
+    EmptyPlanView().environment(RecipeManager())
 }

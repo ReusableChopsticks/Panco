@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Observation
 
 struct ContentView: View {
     @Environment(RecipeManager.self) var recipeManager: RecipeManager

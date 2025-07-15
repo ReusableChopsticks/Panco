@@ -17,9 +17,6 @@ struct PlanningRecipeView: View {
     var imageNames: [String] = ["Recipe 1", "Recipe 2", "Recipe 3", "Recipe 4", "Recipe 5"]
     
     
-    
-    
-    
     @State var selectedImages: Set<String> = []
     
     @Binding var rootIsActive : Bool
@@ -33,6 +30,14 @@ struct PlanningRecipeView: View {
                 
                 
                 VStack(alignment: .leading , spacing: 16) {
+                    Button("load") {
+                        Task {
+                            let fetched: [RecipesResult] = await recipeManager.loadData(maxDuration: 30)
+                            recipeManager.mealPlan = fetched.map { PortionModel(recipe: $0, portion: 1) }
+                            recipeManager.debugLog()
+                        }
+                    }
+                    Text(recipeManager.mealPlan.description)
                     VStack{ // Page title and progress bar group
                         HStack {
                             Spacer()
@@ -201,6 +206,11 @@ struct PlanningRecipeView: View {
                             .disabled(true)
                     }
                 }
+                
+            }.task {
+//                let fetched: [RecipesResult] = await recipeManager.loadData(maxDuration: 30)
+//                recipeManager.mealPlan = fetched.map { PortionModel(recipe: $0, portion: 1) }
+//                recipeManager.debugLog()
                 
             }
         }
