@@ -6,6 +6,7 @@
 import SwiftUI
 
 struct PlanningRecipeView: View {
+    @Environment(RecipeManager.self) var recipeManager: RecipeManager
     
     let columns = [
         GridItem(.fixed(150), spacing: 40),
@@ -14,6 +15,9 @@ struct PlanningRecipeView: View {
     
     
     var imageNames: [String] = ["Recipe 1", "Recipe 2", "Recipe 3", "Recipe 4", "Recipe 5"]
+    
+    
+    
     
     
     @State var selectedImages: Set<String> = []
@@ -207,5 +211,5 @@ struct PlanningRecipeView: View {
 
 
 #Preview {
-    PlanningRecipeView()
+    PlanningRecipeView().environment(RecipeManager())
 }

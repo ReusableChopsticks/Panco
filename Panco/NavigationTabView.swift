@@ -18,7 +18,7 @@ struct NavigationTabView: View {
             }
             
             Tab("History", systemImage: "clock") {
-                FavouritesView()
+                ProfileHistoryView()
             }
             
             Tab("Preferences", systemImage: "person.fill") {

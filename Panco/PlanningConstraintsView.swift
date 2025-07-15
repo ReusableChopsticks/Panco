@@ -7,15 +7,13 @@ import SwiftUI
 struct PlanningConstraintsView: View {
     
     @State var maxCookingTime: Int = 1 //minutes
-    @State var noRecipes: Int = 0
+    @State var numRecipes: Int = 0
     //    @State private var removeCount: Int = 0
     //    @State private var addCount: Int = 0
     
     
     var body: some View {
         NavigationStack {
-//            testing pull with jannalyn yaaaaay
-            
             ZStack {
                 Color(.pancoNeutral)
                     .ignoresSafeArea()
@@ -49,8 +47,8 @@ struct PlanningConstraintsView: View {
                         HStack{
                             // - button
                             Button {
-                                if noRecipes > 0 {
-                                    noRecipes -= 1
+                                if numRecipes > 0 {
+                                    numRecipes -= 1
                                 }
                             } label: {
                                 Image(systemName: "minus.circle.fill")
@@ -63,7 +61,7 @@ struct PlanningConstraintsView: View {
                                 
                                 
                                 // recipe count
-                                Text("\(Int(noRecipes))")
+                                Text("\(Int(numRecipes))")
                                     .fontWeight(.bold)
                                     .font(.largeTitle)
                                     .padding(.leading, 10)
@@ -78,8 +76,8 @@ struct PlanningConstraintsView: View {
                                 
                                 // + button
                                 Button{
-                                    if noRecipes < 10 {
-                                        noRecipes += 1
+                                    if numRecipes < 10 {
+                                        numRecipes += 1
                                     }
                                 } label: {
                                     Image(systemName: "plus.circle.fill")
@@ -150,7 +148,8 @@ struct PlanningConstraintsView: View {
                     }
                 }//VStack end
             }//ZStack end
-        }//NavigationStack end
+        }
+        //NavigationStack end
     } //body end
 }//struct end
 
