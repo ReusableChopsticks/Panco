@@ -10,9 +10,7 @@ struct EmptyPlanView: View {
     
     var body: some View {
         NavigationView {
-            
             ZStack {
-                
                 //Background color
                 Color(.pancoNeutral)
                             .ignoresSafeArea()

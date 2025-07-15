@@ -28,11 +28,15 @@ struct Ingredient: Identifiable {
 // MARK: - Main View
 
 struct FilledPlanView: View {
-    var selectedRecipes: [String] = ["Chicken Rice", "R2", "R3", "R4", "R5"]
+    @Environment(RecipeManager.self) var recipeManager: RecipeManager
+    //    var selectedRecipes: [String] = ["Chicken Rice", "R2", "R3", "R4", "R5"]
+    
+    
     let groceryList: String
     let chosenRecipes: String
     
     @Binding var rootIsActive: Bool
+    
     
     private let columns = [
         GridItem(.fixed(150), spacing: 40),
@@ -67,11 +71,11 @@ struct FilledPlanView: View {
             ingredientsPopover
         }
     }
-
+    
     var header: some View {
         HeaderViewSimple(title: "Plans", rootIsActive: $rootIsActive)
     }
-
+    
     var groceryListTab: some View {
         ZStack(alignment: .leading) {
             NavigationLink {
@@ -91,24 +95,24 @@ struct FilledPlanView: View {
                         .foregroundStyle(.pancoNeutral)
                     
                     // Example logic: show exclamation mark only if list not empty
-//                    if !groceryList.isEmpty {
-//                        Image(systemName: "exclamationmark.circle.fill")
-//                            .resizable()
-//                            .frame(width: 30, height: 30)
-//                            .foregroundStyle(.pancoRed)
-//                    }
+                    //                    if !groceryList.isEmpty {
+                    //                        Image(systemName: "exclamationmark.circle.fill")
+                    //                            .resizable()
+                    //                            .frame(width: 30, height: 30)
+                    //                            .foregroundStyle(.pancoRed)
+                    //                    }
                 }
                 .padding(.horizontal)
                 .frame(height: 70)
                 .background(.pancoLightRed)
                 .cornerRadius(30)
                 .shadow(radius: 5)
-            
+                
             }
         }
         .padding(.horizontal)
     }
-
+    
     var recipeGrid: some View {
         ScrollView {
             LazyVGrid(
@@ -118,40 +122,48 @@ struct FilledPlanView: View {
                 ],
                 spacing: 2
             ) {
-                ForEach(selectedRecipes, id: \.self) { name in
+                ForEach(recipeManager.mealPlan, id: \.id) { portion in
                     Button {
-                        selectedRecipeName = name
+                        selectedRecipeName = "WOOOW"
+                        print("cool")
                     } label: {
-                        ZStack(alignment: .bottomLeading) {
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(Color.gray.opacity(0.3))
-                                .frame(width: 170, height: 170)
-
-                            Text(name)
-                                .font(.title3.bold())
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-                        }
+                        ShowRecipe(portion: portion)
+                        .frame(width: 170, height: 170)
+                        .padding(10)
                     }
-                    .frame(width: 170, height: 170)
-                    .padding(10)
-                    .buttonStyle(.plain)
+
+
+//                    Button {
+//                        selectedRecipeName = recipe.recipe.title
+//                    } label: {
+//                        ZStack(alignment: .bottomLeading) {
+//                            RoundedRectangle(cornerRadius: 20)
+//                                .fill(Color.gray.opacity(0.3))
+//                                .frame(width: 170, height: 170)
+//                            
+//                            Text(recipe.recipe.title)
+//                                .font(.title3.bold())
+//                                .foregroundColor(.white)
+//                                .padding(10)
+//                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+//                        }
+//                    }
+//                    .frame(width: 170, height: 170)
+//                    .padding(10)
+//                    .buttonStyle(.plain)
                 }
             }
             .padding(.horizontal)
         }
     }
-
-
-//    }
+    
     
     var newPlanButton: some View {
         Button("tets") {
             rootIsActive.toggle()
         }
     }
-
+    
     var ingredientsPopover: some View {
         VStack(alignment: .leading, spacing: 8) {
             ForEach(sampleIngredients) { item in
@@ -164,6 +176,34 @@ struct FilledPlanView: View {
             .padding(.top, 8)
         }
         .padding()
+    }
+}
+
+struct ShowRecipe: View {
+    let portion: PortionModel
+    var body: some View {
+        ZStack{
+            AsyncImage(url: URL(string: portion.recipe.image)) { img in
+                img.resizable()
+            } placeholder: {
+                Color.gray.opacity(0.3)
+            }
+            .frame(width: 150, height: 150)
+            .cornerRadius(20)
+            .padding(.trailing, 20)
+            
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.black.opacity(0.4))
+                .frame(width: 150, height: 150)
+                .padding(.trailing, 20)
+            
+            Text(portion.recipe.title)
+                .font(.title3.bold())
+                .foregroundColor(.white)
+                .padding(10)
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: 150, maxHeight: 150, alignment: .bottomLeading)
+        }
     }
 }
 
@@ -206,6 +246,6 @@ struct HeaderViewSimple: View {
             groceryList: "Rice, Eggs",
             chosenRecipes: "Chicken Rice, Soup",
             rootIsActive: .constant(true)
-        )
+        ).environment(RecipeManager())
     }
 }
