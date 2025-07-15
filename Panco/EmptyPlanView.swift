@@ -18,11 +18,13 @@ struct EmptyPlanView: View {
                             .ignoresSafeArea()
                 
                 VStack{
-                    Text("Plans")
-                        .fontWeight(.bold)
-                        .font(.largeTitle)
-                        .padding(.trailing, 270)
-                        .padding(.top, -75)
+                    HStack {
+                        Text("Plan")
+                            .fontWeight(.bold)
+                            .font(.largeTitle)
+                        Spacer()
+                    }
+                    .padding(.horizontal,20)
                     
                     // ⭐️ Panco speech bubble
                     ZStack{
