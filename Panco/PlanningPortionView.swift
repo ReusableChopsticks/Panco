@@ -24,6 +24,9 @@ struct PlanningPortionView: View {
     @Binding var rootIsActive : Bool
     
     var body: some View {
+//        Button("Debug print") {
+//            recipeManager.mealPlan.forEach { print($0.portion) }
+//        }
    
             // Background colour
             ZStack {
@@ -79,26 +82,23 @@ struct PlanningPortionView: View {
                     }
                 }
             }
-//            .onAppear {
-//                for index in 1...recipeCount {
-//                    counters.append(CounterView(id: index))
-//                }
-//            }
         }
     }
 
 
 struct CounterView: View {
 //    let id: Int
-    let recipePortion: PortionModel
-    @State private var count: Int = 0
+    var recipePortion: PortionModel
+//    @State private var count: Int = 1
     
     var body: some View {
         // need to replace with images from api
         ZStack{
-            Text("\(recipePortion.recipe.title)")
-            Image("Recipe 1")
-                .resizable()
+            AsyncImage(url: URL(string: recipePortion.recipe.image)) { img in
+                img.resizable()
+            } placeholder: {
+                Color.gray.opacity(0.3)
+            }
                 .frame(width: 150, height: 150)
                 .cornerRadius(20)
                 .padding(.trailing, 20)
@@ -107,11 +107,18 @@ struct CounterView: View {
                 .fill(Color.black.opacity(0.4))
                 .frame(width: 150, height: 150)
                 .padding(.trailing, 20)
+            
+            Text(recipePortion.recipe.title)
+                .font(.title3.bold())
+                .foregroundColor(.white)
+                .padding(10)
+                .frame(maxWidth: 150, maxHeight: 150, alignment: .bottomLeading)
         }
         
         Button {
-            if count > 0 { count -= 1
-                
+            if recipePortion.portion > 0 {
+//                recipePortion.portion -= 1
+                recipePortion.decrementPortion()
             }
         } label: {
             Image(systemName: "minus.circle.fill")
@@ -121,13 +128,16 @@ struct CounterView: View {
                 .frame(width: 40)
         }
         
-        Text("\(Int(count))")
+        Text("\(Int(recipePortion.portion))")
             .fontWeight(.bold)
             .font(.largeTitle)
             .padding(.horizontal, 10)
         
-        Button {if count < 10  { count += 1}
-            
+        Button {
+            if recipePortion.portion < 10 {
+//                count += 1
+                recipePortion.incrementPortion()
+            }
         } label: {
             Image(systemName: "plus.circle.fill")
                 .resizable()
@@ -138,6 +148,8 @@ struct CounterView: View {
         }
     }
 }
+
+
 
 #Preview {
     PlanningPortionView(recipeCount: 3,rootIsActive: .constant(false)).environment(RecipeManager())

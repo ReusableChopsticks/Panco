@@ -10,7 +10,7 @@ struct PlanningRecipeView: View {
     
     @Binding var rootIsActive: Bool
     
-    @State var selectedImages: Set<String> = []
+    @State var selectedRecipes: Set<RecipesResult> = []
     
     var body: some View {
         ZStack {
@@ -18,7 +18,7 @@ struct PlanningRecipeView: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 16) {
-//                // Load button for testing to reduce unecessary API calls
+                // Load recipes manually for now
                 Button("Load Recipes") {
                     Task {
                         await recipeManager.loadData(maxDuration: 30)
@@ -28,26 +28,24 @@ struct PlanningRecipeView: View {
                 HeaderView(title: "Recipe", progress: 0.66)
                 
                 SurpriseButtonsView(
-                    recipeTitles: recipeManager.recipes.map { $0.title },
-                    selectedImages: $selectedImages
+                    recipes: recipeManager.recipes,
+                    selectedRecipes: $selectedRecipes
                 )
                 
                 RecipeGridView(
                     recipes: recipeManager.recipes,
-                    selectedImages: $selectedImages
+                    selectedRecipes: $selectedRecipes
                 )
-                
             }
+            
             ContinueButtonView(
-                selectedCount: selectedImages.count,
+                selectedRecipes: selectedRecipes,
                 rootIsActive: $rootIsActive
             )
-        }.task {
-// TODO:            replace with previous screen data!
-//            await recipeManager.loadData(maxDuration: 60)
         }
     }
 }
+
 
 
 struct HeaderView: View {
@@ -80,15 +78,16 @@ struct HeaderView: View {
 
 
 struct SurpriseButtonsView: View {
-    var recipeTitles: [String]
-    @Binding var selectedImages: Set<String>
+    var recipes: [RecipesResult]
+    @Binding var selectedRecipes: Set<RecipesResult>
     
     var body: some View {
         HStack {
             Button("Surprise Me") {
-                selectedImages.removeAll()
-                let numberToSelect = min(3, recipeTitles.count)
-                selectedImages = Set(recipeTitles.shuffled().prefix(numberToSelect))
+                selectedRecipes.removeAll()
+                
+                let numberToSelect = min(3, recipes.count)
+                selectedRecipes = Set(recipes.shuffled().prefix(numberToSelect))
             }
             .foregroundColor(Color.pancoNeutral)
             .font(.headline.bold())
@@ -97,9 +96,9 @@ struct SurpriseButtonsView: View {
             .cornerRadius(20)
             .shadow(radius: 2)
             
-            Button(action: {
-                // Shuffle (TODO: define what shuffle means)
-            }) {
+            Button {
+                // Maybe shuffle all recipes in grid
+            } label: {
                 Image(systemName: "shuffle")
                     .font(.title2)
                     .foregroundColor(.pancoNeutral)
@@ -114,9 +113,10 @@ struct SurpriseButtonsView: View {
 }
 
 
+
 struct RecipeGridView: View {
     let recipes: [RecipesResult]
-    @Binding var selectedImages: Set<String>
+    @Binding var selectedRecipes: Set<RecipesResult>
     
     private let columns = [
         GridItem(.fixed(150), spacing: 40),
@@ -129,13 +129,11 @@ struct RecipeGridView: View {
                 ForEach(recipes, id: \.id) { recipe in
                     RecipeCard(
                         recipe: recipe,
-                        isSelected: selectedImages.contains(recipe.title)
+                        isSelected: selectedRecipes.contains(recipe)
                     ) {
                         toggleSelection(for: recipe)
                     }
                 }
-                
-                // Extra tile for "Favourites"
                 FavouriteCard()
             }
             .padding(.horizontal)
@@ -143,13 +141,14 @@ struct RecipeGridView: View {
     }
     
     private func toggleSelection(for recipe: RecipesResult) {
-        if selectedImages.contains(recipe.title) {
-            selectedImages.remove(recipe.title)
+        if selectedRecipes.contains(recipe) {
+            selectedRecipes.remove(recipe)
         } else {
-            selectedImages.insert(recipe.title)
+            selectedRecipes.insert(recipe)
         }
     }
 }
+
 
 
 struct RecipeCard: View {
@@ -160,7 +159,7 @@ struct RecipeCard: View {
     var body: some View {
         ZStack(alignment: .bottomLeading) {
             
-            // ✅ Load image from API
+            
             AsyncImage(url: URL(string: recipe.image)) { img in
                 img.resizable()
             } placeholder: {
@@ -227,16 +226,23 @@ struct FavouriteCard: View {
 }
 
 struct ContinueButtonView: View {
-    let selectedCount: Int
+    let selectedRecipes: Set<RecipesResult>
+    @Environment(RecipeManager.self) var recipeManager
     @Binding var rootIsActive: Bool
     
     var body: some View {
         VStack {
             Spacer()
             
-            if selectedCount > 0 {
+            if selectedRecipes.count > 0 {
                 NavigationLink {
-                    PlanningPortionView(recipeCount: selectedCount, rootIsActive: $rootIsActive)
+                    // ✅ Before navigating, update mealPlan
+                    let mealPlan = selectedRecipes.map { PortionModel(recipe: $0, portion: 1) }
+                    recipeManager.mealPlan = mealPlan
+                    
+                    return PlanningPortionView(recipeCount: selectedRecipes.count,
+                                               rootIsActive: $rootIsActive)
+                    
                 } label: {
                     Text("Continue")
                         .foregroundColor(.pancoNeutral)
@@ -247,12 +253,11 @@ struct ContinueButtonView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .shadow(radius: 5)
                 }
-            } else {
-
             }
         }
     }
 }
+
 
 
 

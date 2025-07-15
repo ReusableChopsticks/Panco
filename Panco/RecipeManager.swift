@@ -14,7 +14,7 @@ import SwiftUI
     private let API_KEY = "5808fdadcfa04697abafb3f0dea869eb"
     
     var recipes = [RecipesResult]()
-    var mealPlan: [PortionModel] = []
+    var mealPlan: [PortionModel] = PortionModel.sampleData
     var history: [MealPlanHistoryModel] = []
     
     var allergies: [String] = []
@@ -90,19 +90,43 @@ struct MealPlanHistoryModel: Identifiable {
     var history: [PortionModel]
 }
 
-struct PortionModel: Identifiable {
+@Observable
+class PortionModel: Identifiable {
     var id: Int { recipe.id }
     var recipe: RecipesResult
     var portion: Int
+    
+    init(recipe: RecipesResult, portion: Int) {
+        self.recipe = recipe
+        self.portion = portion
+    }
+    
+    func incrementPortion() {
+        portion += 1
+    }
+    
+    func decrementPortion() {
+        portion -= 1
+    }
+
+    static var sampleData: [PortionModel] = [Panco.PortionModel(recipe: Panco.RecipesResult(id: 716406, title: "Asparagus and Pea Soup: Real Convenience Food", image: "https://img.spoonacular.com/recipes/716406-312x231.jpg", imageType: "jpg"), portion: 1), Panco.PortionModel(recipe: Panco.RecipesResult(id: 716426, title: "Cauliflower, Brown Rice, and Vegetable Fried Rice", image: "https://img.spoonacular.com/recipes/716426-312x231.jpg", imageType: "jpg"), portion: 1)]
 }
 
 struct RecipesResponse: Codable {
     var results: [RecipesResult]
 }
 
-struct RecipesResult: Codable {
+struct RecipesResult: Codable, Hashable, Equatable {
     var id: Int
     var title: String
     var image: String
     var imageType: String
+
+    static func == (lhs: RecipesResult, rhs: RecipesResult) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
