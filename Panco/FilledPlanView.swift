@@ -69,24 +69,7 @@ struct FilledPlanView: View {
     }
 
     var header: some View {
-        HStack {
-            Text("Plans")
-                .fontWeight(.bold)
-                .font(.largeTitle)
-                .padding(.trailing, 200)
-            
-            NavigationLink {
-                PlanningConstraintsView(rootIsActive: $rootIsActive)
-            } label: {
-                Image(systemName: "pencil")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 20)
-                    .foregroundStyle(.pancoRed)
-            }
-            .buttonStyle(.plain)
-        }
-        .padding(.top, 50)
+        HeaderViewSimple(title: "Plans", rootIsActive: $rootIsActive)
     }
 
     var groceryListTab: some View {
@@ -108,65 +91,59 @@ struct FilledPlanView: View {
                         .foregroundStyle(.pancoNeutral)
                     
                     // Example logic: show exclamation mark only if list not empty
-                    if !groceryList.isEmpty {
-                        Image(systemName: "exclamationmark.circle.fill")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .foregroundStyle(.pancoRed)
-                    }
+//                    if !groceryList.isEmpty {
+//                        Image(systemName: "exclamationmark.circle.fill")
+//                            .resizable()
+//                            .frame(width: 30, height: 30)
+//                            .foregroundStyle(.pancoRed)
+//                    }
                 }
                 .padding(.horizontal)
-                .frame(height: 45)
+                .frame(height: 70)
                 .background(.pancoLightRed)
                 .cornerRadius(30)
                 .shadow(radius: 5)
-                .padding(.top, 20)
+            
             }
         }
         .padding(.horizontal)
     }
 
     var recipeGrid: some View {
-        LazyVGrid(columns: columns, spacing: 20) {
-            ForEach(selectedRecipes, id: \.self) { name in
-                Button {
-                    selectedRecipeName = name
-                } label: {
-                    ZStack(alignment: .bottomLeading) {
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(Color.gray.opacity(0.3))
-                            .frame(width: 170, height: 170)
-                            .padding(10)
-                        
-                        Text(name)
-                            .font(.title3)
-                            .foregroundColor(.white)
-                            .fontWeight(.bold)
-                            .padding(6)
-                            .padding(.leading, 15)
-                            .padding(.bottom, 10)
+        ScrollView {
+            LazyVGrid(
+                columns: [
+                    GridItem(.fixed(150), spacing: 40),
+                    GridItem(.fixed(150), spacing: 40)
+                ],
+                spacing: 2
+            ) {
+                ForEach(selectedRecipes, id: \.self) { name in
+                    Button {
+                        selectedRecipeName = name
+                    } label: {
+                        ZStack(alignment: .bottomLeading) {
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(Color.gray.opacity(0.3))
+                                .frame(width: 170, height: 170)
+
+                            Text(name)
+                                .font(.title3.bold())
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+                        }
                     }
+                    .frame(width: 170, height: 170)
+                    .padding(10)
+                    .buttonStyle(.plain)
                 }
-                .buttonStyle(.plain)
             }
+            .padding(.horizontal)
         }
-        .padding()
     }
 
-//    var newPlanButton: some View {
-//        NavigationLink {
-//            PlanningConstraintsView(rootIsActive: $rootIsActive)
-//        } label: {
-//            Text("New Plan")
-//                .foregroundColor(.pancoNeutral)
-//                .font(.headline)
-//                .padding()
-//                .frame(width: 180, height: 60)
-//                .background(.pancoRed)
-//                .cornerRadius(20)
-//                .shadow(radius: 5)
-//        }
-//        .padding(.top, 20)
+
 //    }
     
     var newPlanButton: some View {
@@ -189,6 +166,37 @@ struct FilledPlanView: View {
         .padding()
     }
 }
+
+struct HeaderViewSimple: View {
+    let title: String
+    @Binding var rootIsActive: Bool  // pass binding for navigation
+    
+    var body: some View {
+        HStack {
+            Text(title)
+                .fontWeight(.bold)
+                .font(.largeTitle)
+            Spacer()
+            
+            NavigationLink {
+                PlanningConstraintsView(rootIsActive: $rootIsActive)
+            } label: {
+                
+                //‼️Can we change this as it gets lost in the layout
+                Image(systemName: "pencil")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20)
+                    .foregroundStyle(.pancoRed)
+                    .font(.system(size: 20, weight: .bold))
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(.horizontal, 20)
+        .padding(.top, 16)
+    }
+}
+
 
 // MARK: - Preview
 

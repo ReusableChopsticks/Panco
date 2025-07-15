@@ -25,7 +25,7 @@ struct PlanningRecipeView: View {
 //                    }
 //                }
                 
-                HeaderView()
+                HeaderView(title: "Recipe", progress: 0.66)
                 
                 SurpriseButtonsView(
                     recipeTitles: recipeManager.recipes.map { $0.title },
@@ -50,25 +50,32 @@ struct PlanningRecipeView: View {
 
 
 struct HeaderView: View {
+    let title: String
+    let progress: Double
+    
     var body: some View {
-        VStack {
+        VStack(spacing: 8) {
             HStack {
                 Spacer()
-                ProgressView(value: 0.66)
+                ProgressView(value: progress)
+                    .progressViewStyle(LinearProgressViewStyle(tint: Color.pancoGreen))
+                    .scaleEffect(x: 1, y: 2, anchor: .center) // make progress bar taller
                     .frame(width: 160)
-                    .accentColor(Color.pancoGreen)
+                    .padding(.top)
                 Spacer()
             }
             
-            Text("Meals")
-                .fontWeight(.bold)
-                .font(.largeTitle)
-                .padding(.trailing, 200)
-                .padding(.top, 20)
+            HStack {
+                Text(title)
+                    .fontWeight(.bold)
+                    .font(.largeTitle)
+                Spacer()
+            }
+            .padding(.horizontal, 20)
         }
-        .padding(.top, 20)
     }
 }
+
 
 
 struct SurpriseButtonsView: View {
@@ -101,8 +108,7 @@ struct SurpriseButtonsView: View {
             .cornerRadius(20)
             .shadow(radius: 2)
         }
-        .padding(.leading, 20)
-        .padding(.top, 20)
+        .padding(.top, 10)
     }
 }
 
@@ -234,22 +240,14 @@ struct ContinueButtonView: View {
                     Text("Continue")
                         .foregroundColor(.pancoNeutral)
                         .font(.headline)
+                        .padding()
                         .frame(width: 180, height: 60)
                         .background(Color.pancoLightGreen)
-                        .cornerRadius(20)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
                         .shadow(radius: 5)
                 }
-                .padding(.bottom, 30)
             } else {
-                Text("Continue")
-                    .foregroundColor(.gray)
-                    .font(.headline)
-                    .frame(width: 180, height: 60)
-                    .background(Color.pancoNeutral)
-                    .cornerRadius(20)
-                    .shadow(radius: 5)
-                    .padding(.bottom, 30)
-                    .disabled(true)
+
             }
         }
     }

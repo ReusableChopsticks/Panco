@@ -24,17 +24,21 @@ struct GroceryRowView: View {
             
             (
                 Text(item.quantity)
+                    .font(.title3)
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.pancoGreen)
-                + Text("  \(item.name)")
+                + Text(" \(item.name)")
+                    .font(.title3)
             )
             .padding(.vertical, 20)
             
             Spacer()
         }
-        .padding()
+        .padding(.top,5)
+        .padding(.bottom,5)
+        .padding(.horizontal, 20)
         .background(Color.pancoLightRed.opacity(0.15))
-        .cornerRadius(12)
+        .cornerRadius(15)
     }
 }
 

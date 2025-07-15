@@ -32,17 +32,25 @@ struct PlanningPortionView: View {
                 // view components
                 VStack {
                     
-                    ProgressView(value: 0.9)
-                        .frame(width: 160)
-                        .accentColor(Color.pancoGreen)
-                        .padding(.top, 20)
+                    HStack {
+                        Spacer()
+                        ProgressView(value: 0.33)
+                            .progressViewStyle(LinearProgressViewStyle(tint: Color.pancoGreen))
+                            .scaleEffect(x: 1, y: 2, anchor: .center) // ⬅️ Makes the bar 3x taller
+                            .frame(width: 160)
+
+                            Spacer()
+                    }
                     
-                    Text("Portioning")
-                        .fontWeight(.bold)
-                        .font(.largeTitle)
-                        .padding(.trailing, 180)
-                        .padding(.top, 20)
-                        .padding(.bottom, 9)
+                    
+                    // ⭐️ Page title
+                    HStack {
+                        Text("Portion")
+                            .fontWeight(.bold)
+                            .font(.largeTitle)
+                        Spacer()
+                    }
+                    .padding(.horizontal,20)
                     
                     
                     ScrollView {
