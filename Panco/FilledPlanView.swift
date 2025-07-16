@@ -124,8 +124,7 @@ struct FilledPlanView: View {
             ) {
                 ForEach(recipeManager.mealPlan, id: \.id) { portion in
                     Button {
-                        selectedRecipeName = "WOOOW"
-                        print("cool")
+                        selectedRecipeName = portion.recipe.title
                     } label: {
                         ShowRecipe(portion: portion)
                         .frame(width: 170, height: 170)
@@ -173,6 +172,12 @@ struct FilledPlanView: View {
     
     var ingredientsPopover: some View {
         VStack(alignment: .leading, spacing: 8) {
+            Text(selectedRecipeName ?? "").font(.title).bold(true)
+            
+            Link("View recipe online",
+                 destination: URL(string: "https://www.allrecipes.com/recipe/80934/fairy-bread/")!).padding(.bottom, 20)
+            
+            Text("Ingredients").font(.title3).bold(true)
             ForEach(sampleIngredients) { item in
                 Text("\(item.name): \(item.amount.clean) \(item.unit)")
             }
