@@ -160,7 +160,7 @@ struct FilledPlanView: View {
                 // Header
                 HStack {
                     Text(selectedRecipeName ?? "")
-                        .font(.title2)
+                        .font(.title)
                         .fontWeight(.bold)
                     Spacer()
                     Button {
@@ -172,6 +172,13 @@ struct FilledPlanView: View {
                             .foregroundStyle(Color.pancoGreen)
                     }
                 }
+                
+                Image("FishTacos")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: .infinity)
+                    .cornerRadius(12)
+
                 
                 // Link
                 Link("View recipe online",
