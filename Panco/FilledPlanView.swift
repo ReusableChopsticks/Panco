@@ -73,7 +73,7 @@ struct FilledPlanView: View {
     }
     
     var header: some View {
-        HeaderViewSimple(title: "Plans", rootIsActive: $rootIsActive)
+        HeaderViewSimple(title: "Current Plan", rootIsActive: $rootIsActive)
     }
     
     var groceryListTab: some View {
@@ -103,7 +103,7 @@ struct FilledPlanView: View {
                     //                    }
                 }
                 .padding(.horizontal)
-                .frame(height: 70)
+                .frame(height: 60)
                 .background(.pancoLightRed)
                 .cornerRadius(30)
                 .shadow(radius: 5)
