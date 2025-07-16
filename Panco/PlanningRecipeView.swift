@@ -18,12 +18,6 @@ struct PlanningRecipeView: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 16) {
-                // Load recipes manually for now
-                Button("Load Recipes") {
-                    Task {
-                        await recipeManager.loadData(maxDuration: 30)
-                    }
-                }
                 
                 HeaderView(title: "Recipe", progress: 0.66)
                 
@@ -249,11 +243,22 @@ struct ContinueButtonView: View {
                         .font(.headline)
                         .padding()
                         .frame(width: 180, height: 60)
-                        .background(Color.pancoLightGreen)
+                        .background(Color.pancoGreen)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .shadow(radius: 5)
                 }
+                
             }
+            
+            // Load recipes manually for now
+            Button("Load Recipes") {
+                Task {
+                    await recipeManager.loadData(maxDuration: 30)
+                }
+            }
+            .foregroundColor(.pancoNeutral)
+            .opacity(0)
+            
         }
     }
 }
