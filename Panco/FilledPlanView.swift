@@ -113,6 +113,11 @@ struct FilledPlanView: View {
         .padding(.horizontal)
     }
     
+    var sampleRecipes: [RecipesResult] = [
+        Panco.RecipesResult(id: 715421, title: "Cheesy Chicken Casserole", image: "CheesyChicken", imageType: "jpg"),
+        Panco.RecipesResult(id: 782601, title: "Fish Tacos", image: "FishTacos", imageType: "jpg")
+    ]
+    
     var recipeGrid: some View {
         ScrollView {
             LazyVGrid(
@@ -122,14 +127,24 @@ struct FilledPlanView: View {
                 ],
                 spacing: 2
             ) {
-                ForEach(recipeManager.mealPlan, id: \.id) { portion in
+                ForEach(sampleRecipes, id: \.id) { recipe in
                     Button {
-                        selectedRecipeName = portion.recipe.title
+                        selectedRecipeName = recipe.title
                     } label: {
-                        ShowRecipe(portion: portion)
-                        .frame(width: 170, height: 170)
-                        .padding(10)
+                        HardCodedRecipe(recipe: recipe)
+                            .frame(width: 170, height: 170)
+                            .padding(10)
                     }
+                
+//                    With proper data from API
+//                ForEach(recipeManager.mealPlan, id: \.id) { portion in
+//                    Button {
+//                        selectedRecipeName = portion.recipe.title
+//                    } label: {
+//                        ShowRecipe(portion: portion)
+//                        .frame(width: 170, height: 170)
+//                        .padding(10)
+//                    }
 
 
 //                    Button {
@@ -191,12 +206,38 @@ struct FilledPlanView: View {
     }
 }
 
+struct HardCodedRecipe: View {
+    let recipe: RecipesResult
+    var body: some View {
+        ZStack{
+            Image(recipe.image)
+                .resizable()
+            .frame(width: 170, height: 170)
+            .cornerRadius(20)
+
+            
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.black.opacity(0.4))
+                .frame(width: 170, height: 170)
+  
+            
+            Text(recipe.title)
+                .font(.caption.bold())
+                .foregroundColor(.white)
+                .padding(10)
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: 150, maxHeight: 150, alignment: .bottomLeading)
+        }
+    }
+}
+
 struct ShowRecipe: View {
     let portion: PortionModel
     var body: some View {
         ZStack{
             AsyncImage(url: URL(string: portion.recipe.image)) { img in
                 img.resizable()
+                    .scaledToFill()
             } placeholder: {
                 Color.gray.opacity(0.3)
             }

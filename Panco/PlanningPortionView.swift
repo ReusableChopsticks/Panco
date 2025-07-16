@@ -101,6 +101,7 @@ struct PlanningPortionView: View {
                 // Image
                 AsyncImage(url: URL(string: recipePortion.recipe.image)) { img in
                     img.resizable()
+                        .scaledToFill()
                 } placeholder: {
                     Color.gray.opacity(0.3)
                 }

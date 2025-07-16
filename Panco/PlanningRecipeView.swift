@@ -19,6 +19,13 @@ struct PlanningRecipeView: View {
             
             VStack(spacing: 16) {
                 
+//                // Load recipes manually for now
+//                Button("Load Recipes") {
+//                    Task {
+//                        await recipeManager.loadData(maxDuration: 60)
+//                    }
+//                }
+                
                 HeaderView(title: "Recipe", progress: 0.66)
                 
                 SurpriseButtonsView(
@@ -155,7 +162,9 @@ struct RecipeCard: View {
             
             
             AsyncImage(url: URL(string: recipe.image)) { img in
-                img.resizable()
+                img
+                    .resizable()
+                    .scaledToFill()
             } placeholder: {
                 Color.gray.opacity(0.3)
             }
@@ -234,8 +243,7 @@ struct ContinueButtonView: View {
                     let mealPlan = selectedRecipes.map { PortionModel(recipe: $0, portion: 1) }
                     recipeManager.mealPlan = mealPlan
                     
-                    return PlanningPortionView(recipeCount: selectedRecipes.count,
-                                               rootIsActive: $rootIsActive)
+                    return PlanningPortionView(recipeCount: selectedRecipes.count,  rootIsActive: $rootIsActive)
                     
                 } label: {
                     Text("Continue")
@@ -249,16 +257,6 @@ struct ContinueButtonView: View {
                 }
                 
             }
-            
-            // Load recipes manually for now
-            Button("Load Recipes") {
-                Task {
-                    await recipeManager.loadData(maxDuration: 30)
-                }
-            }
-            .foregroundColor(.pancoNeutral)
-            .opacity(0)
-            
         }
     }
 }

@@ -77,6 +77,7 @@ struct RecipeCardView: View {
             
             AsyncImage(url: URL(string: imageName)) { img in
                 img.resizable()
+                    .scaledToFill()
             } placeholder: {
                 Color.gray.opacity(0.3)
             }

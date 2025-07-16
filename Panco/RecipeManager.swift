@@ -13,7 +13,12 @@ import SwiftUI
 @Observable class RecipeManager {
     private let API_KEY = "5808fdadcfa04697abafb3f0dea869eb"
     
-    static var sampleRecipes: [RecipesResult] = [Panco.RecipesResult(id: 716406, title: "Asparagus and Pea Soup: Real Convenience Food", image: "https://img.spoonacular.com/recipes/716406-312x231.jpg", imageType: "jpg"), Panco.RecipesResult(id: 716426, title: "Cauliflower, Brown Rice, and Vegetable Fried Rice", image: "https://img.spoonacular.com/recipes/716426-312x231.jpg", imageType: "jpg"), Panco.RecipesResult(id: 640941, title: "Crunchy Brussels Sprouts Side Dish", image: "https://img.spoonacular.com/recipes/640941-312x231.jpg", imageType: "jpg"), Panco.RecipesResult(id: 756814, title: "Powerhouse Almond Matcha Superfood Smoothie", image: "https://img.spoonacular.com/recipes/756814-312x231.jpg", imageType: "jpg"), Panco.RecipesResult(id: 715769, title: "Broccolini Quinoa Pilaf", image: "https://img.spoonacular.com/recipes/715769-312x231.jpg", imageType: "jpg")]
+    static var sampleRecipes: [RecipesResult] = [
+        Panco.RecipesResult(id: 715421, title: "Cheesy Chicken Casserole", image: "https://img.spoonacular.com/recipes/715421-312x231.jpg", imageType: "jpg"),
+        Panco.RecipesResult(id: 782601, title: "Fish Tacos", image: "https://www.seriouseats.com/thmb/y3Qf-ciu-nzLgYeJzK4xWoabibQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/SEA-M7011302_crunchy_fish_tacos6556-JenCausey-f8285ed3d8674b25bf16d027034fc41b.jpg", imageType: "jpg"),
+        Panco.RecipesResult(id: 716406, title: "Asparagus and Pea Soup: Real Convenience Food", image: "https://img.spoonacular.com/recipes/716406-312x231.jpg", imageType: "jpg"),
+        Panco.RecipesResult(id: 644387, title: "Garlicky Kale", image: "https://img.spoonacular.com/recipes/644387-312x231.jpg", imageType: "jpg"),
+        Panco.RecipesResult(id: 716426, title: "Cauliflower, Brown Rice, and Vegetable Fried Rice", image: "https://img.spoonacular.com/recipes/716426-312x231.jpg", imageType: "jpg")]
     
     var recipes: [RecipesResult] = sampleRecipes
     var mealPlan: [PortionModel] = PortionModel.sampleData
@@ -39,6 +44,8 @@ import SwiftUI
         var queryItems: [URLQueryItem] = []
         queryItems.append(URLQueryItem(name: "apiKey", value: API_KEY))
         queryItems.append(URLQueryItem(name: "maxReadyTime", value: "\(maxDuration)"))
+        queryItems.append(URLQueryItem(name: "type", value: "main_course"))
+        queryItems.append(URLQueryItem(name: "offset", value: "10"))
 
         if !allergies.isEmpty {
             queryItems.append(URLQueryItem(name: "intolerances", value: allergies.joined(separator: ",")))
