@@ -9,9 +9,9 @@ struct PlanningConstraintsView: View {
 
     var body: some View {
         
-        Button("Home") {
-            rootIsActive = false
-        }
+//        Button("Home") {
+//            rootIsActive = false
+//        }
         
         ZStack {
             Color(.pancoNeutral)
@@ -90,7 +90,7 @@ struct PlanningConstraintsView: View {
                     }
                     .pickerStyle(.wheel)
                     .background(Color.pancoNeutral)
-                    .frame(width: 350, height: 100)
+                    .frame(width: 300, height: 100)
                     .cornerRadius(20)
                 }
                 .frame(maxWidth: .infinity, maxHeight: 250)
@@ -107,7 +107,7 @@ struct PlanningConstraintsView: View {
                         .font(.headline)
                         .padding()
                         .frame(width: 180, height: 60)
-                        .background(Color.pancoLightGreen)
+                        .background(Color.pancoGreen)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .shadow(radius: 5)
                 }

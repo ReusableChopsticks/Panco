@@ -1,4 +1,4 @@
-//
+
 //  ContentView.swift
 //  panco
 //
@@ -20,135 +20,159 @@ struct PlanningPortionView: View {
         GridItem(.fixed(50), spacing:2)
     ]
     
+    let rows = [
+        GridItem(.fixed(190)),  // height of each row
+        GridItem(.fixed(190))
+    ]
     
     @Binding var rootIsActive : Bool
     
     var body: some View {
-//        Button("Debug print") {
-//            recipeManager.mealPlan.forEach { print($0.portion) }
-//        }
-   
-            // Background colour
-            ZStack {
-                Color(.pancoNeutral)
-                    .ignoresSafeArea()
+        //        Button("Debug print") {
+        //            recipeManager.mealPlan.forEach { print($0.portion) }
+        //        }
+        
+        // Background colour
+        ZStack {
+            Color(.pancoNeutral)
+                .ignoresSafeArea()
+            
+            // view components
+            VStack {
                 
-                // view components
-                VStack {
+                HStack {
+                    Spacer()
+                    ProgressView(value: 0.33)
+                        .progressViewStyle(LinearProgressViewStyle(tint: Color.pancoGreen))
+                        .scaleEffect(x: 1, y: 2, anchor: .center) // ⬅️ Makes the bar 3x taller
+                        .frame(width: 160)
                     
-                    HStack {
-                        Spacer()
-                        ProgressView(value: 0.33)
-                            .progressViewStyle(LinearProgressViewStyle(tint: Color.pancoGreen))
-                            .scaleEffect(x: 1, y: 2, anchor: .center) // ⬅️ Makes the bar 3x taller
-                            .frame(width: 160)
-
-                            Spacer()
-                    }
+                    Spacer()
+                }
+                
+                
+                // ⭐️ Page title
+                HStack {
+                    Text("Portion")
+                        .fontWeight(.bold)
+                        .font(.largeTitle)
+                    Spacer()
+                }
+                .padding(.horizontal,20)
+                
+                ZStack {
                     
                     
-                    // ⭐️ Page title
-                    HStack {
-                        Text("Portion")
-                            .fontWeight(.bold)
-                            .font(.largeTitle)
-                        Spacer()
-                    }
-                    .padding(.horizontal,20)
-                    
-                    
-                    ScrollView {
-                        LazyVGrid(columns: columns, spacing: 20) {
-//                            ForEach(counters, id: \.id) { counter in
-//                                counter
-//                            }
-                            
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        LazyHGrid(rows: rows, spacing: 20) {
                             ForEach(recipeManager.mealPlan, id: \.id) { portion in
                                 CounterView(recipePortion: portion)
                             }
                         }
+                        .padding(.horizontal)
                     }
+                    .padding(.bottom, 250)
                     
-                    NavigationLink() {
+                    
+                    
+                    NavigationLink {
                         PlanningSummaryView(rootIsActive: $rootIsActive)
                     } label: {
                         Text("Continue")
-                            .foregroundColor(Color.pancoNeutral)
+                            .foregroundColor(.pancoNeutral)
                             .font(.headline)
                             .frame(width: 180, height: 60)
-                            .background(Color.pancoLightGreen)
-                            .clipShape(.rect(cornerRadius: 20))
+                            .background(Color.pancoGreen)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
                             .shadow(radius: 5)
                     }
+                    .padding(.top,450)
                 }
             }
         }
     }
-
-
-struct CounterView: View {
-//    let id: Int
-    var recipePortion: PortionModel
-//    @State private var count: Int = 1
     
-    var body: some View {
-        // need to replace with images from api
-        ZStack{
-            AsyncImage(url: URL(string: recipePortion.recipe.image)) { img in
-                img.resizable()
-            } placeholder: {
-                Color.gray.opacity(0.3)
-            }
-                .frame(width: 150, height: 150)
+    
+    struct CounterView: View {
+        var recipePortion: PortionModel
+        
+        var body: some View {
+            HStack {
+                // Image
+                AsyncImage(url: URL(string: recipePortion.recipe.image)) { img in
+                    img.resizable()
+                } placeholder: {
+                    Color.gray.opacity(0.3)
+                }
+                .frame(width: 140, height: 140)
                 .cornerRadius(20)
-                .padding(.trailing, 20)
-            
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.black.opacity(0.4))
-                .frame(width: 150, height: 150)
-                .padding(.trailing, 20)
-            
-            Text(recipePortion.recipe.title)
-                .font(.title3.bold())
-                .foregroundColor(.white)
-                .padding(10)
-                .frame(maxWidth: 150, maxHeight: 150, alignment: .bottomLeading)
-        }
-        
-        Button {
-            if recipePortion.portion > 0 {
-//                recipePortion.portion -= 1
-                recipePortion.decrementPortion()
-            }
-        } label: {
-            Image(systemName: "minus.circle.fill")
-                .resizable()
-                .scaledToFit()
-                .foregroundStyle(Color.pancoGreen)
-                .frame(width: 40)
-        }
-        
-        Text("\(Int(recipePortion.portion))")
-            .fontWeight(.bold)
-            .font(.largeTitle)
-            .padding(.horizontal, 10)
-        
-        Button {
-            if recipePortion.portion < 10 {
-//                count += 1
-                recipePortion.incrementPortion()
-            }
-        } label: {
-            Image(systemName: "plus.circle.fill")
-                .resizable()
-                .scaledToFit()
-                .foregroundStyle(Color.pancoGreen)
-                .frame(width: 40)
-                .padding(.leading, 25)
-        }
-    }
-}
+                .padding(.leading, 20)
+                
+                VStack() {
+                    Text(recipePortion.recipe.title)
+                        .font(.subheadline)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .padding(.top, 20)
+                        .padding(.leading, 2)
+                    
+                    Spacer()
+                    
+                    HStack {
+                        Button {
+                            if recipePortion.portion > 0 {
+                                recipePortion.decrementPortion()
+                            }
+                        } label: {
+                            Image(systemName: "minus.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .foregroundStyle(Color.pancoGreen)
+                                .frame(width: 40)
+                        }
+                        .padding(.leading, 10)
+                        .padding(.bottom, 15)
+                        
+                        Text("\(Int(recipePortion.portion))")
+                            .fontWeight(.bold)
+                            .font(.largeTitle)
+                            .padding(.horizontal, 10)
+                            .foregroundStyle(.white)
+                            .frame(width: 70, height: 70)
+                            .background(Color.pancoGreen)
+                            .cornerRadius(15)
+                            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+                            .padding(5)
+                            .padding(.bottom, 15)
+                        
+                        Button {
+                            if recipePortion.portion < 10 {
+                                recipePortion.incrementPortion()
+                            }
+                        } label: {
+                            Image(systemName: "plus.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .foregroundStyle(Color.pancoGreen)
+                                .frame(width: 40)
+                        }
+                        .padding(.bottom, 15)
+                    }
+                
+                 
 
+                }
+        
+                .padding(.vertical, 10)
+            }
+            .background(Color.pancoLightRed.opacity(0.15))
+            .cornerRadius(15)
+            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+            .frame(width: 375, height: 190)
+        }
+    
+    }
+
+}
 
 
 #Preview {

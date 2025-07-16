@@ -87,7 +87,7 @@ struct PlanningGroceryView: View {
                         .foregroundColor(Color.pancoNeutral)
                         .font(.headline)
                         .frame(width: 180, height: 60)
-                        .background(Color.pancoLightGreen)
+                        .background(Color.pancoGreen)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .shadow(radius: 5)
                 }

@@ -56,6 +56,8 @@ struct PlanningSummaryView: View {
                         let newHistory: MealPlanHistoryModel = MealPlanHistoryModel(id: UUID(), date: Date(), history: recipeManager.mealPlan)
                         recipeManager.history.append(newHistory)
                     }
+                    
+                    .padding(.bottom, 40)
                 }
             }
         }
@@ -80,22 +82,24 @@ struct RecipeCardView: View {
             }
             .frame(width: 150, height: 150)
             .cornerRadius(20)
-//            .padding(.trailing, 20)
+            .padding(.leading, 10)
             
             VStack {
                 Text(title)
                     .font(.title3)
                     .frame(maxWidth: .infinity, alignment: .trailing)
+                    .padding(.top, 10)
                 
                 Spacer()
                 
                 Text("\(count)")
-                    .font(.system(size: 31))
+                    .font(.largeTitle)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, alignment: .bottomTrailing)
             }.padding(.vertical, 11).padding(.trailing, 20)
         }
         .background(.pancoLightRed.opacity(0.15))
+        .frame(width: 375, height: 190)
         .cornerRadius(15)
         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2) //
     }
