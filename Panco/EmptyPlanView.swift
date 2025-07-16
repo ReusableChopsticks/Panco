@@ -50,11 +50,7 @@ struct EmptyPlanView: View {
                         .scaledToFit()
                         .frame(height:200)
                     
-
-                    
-                    NavigationLink {
-                        PlanningConstraintsView(rootIsActive: $isActive)
-                    } label: {
+                    NavigationLink (destination: PlanningConstraintsView(rootIsActive: $isActive), isActive: $isActive) {
                         Text("New Plan")
                             .foregroundColor(.pancoNeutral)
                             .font(.headline)

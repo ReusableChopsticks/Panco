@@ -8,6 +8,11 @@ struct PlanningConstraintsView: View {
     @Binding var rootIsActive: Bool
 
     var body: some View {
+        
+        Button("Home") {
+            rootIsActive = false
+        }
+        
         ZStack {
             Color(.pancoNeutral)
                 .ignoresSafeArea()
