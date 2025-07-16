@@ -26,7 +26,7 @@ struct PlanningConstraintsView: View {
                 
                 // ⭐️ Number of recipes section
                 VStack {
-                    Text("No. of recipes this week")
+                    Text("No. of dinners")
                         .font(.title3)
                         .fontWeight(.semibold)
                         .padding(.top, 10)

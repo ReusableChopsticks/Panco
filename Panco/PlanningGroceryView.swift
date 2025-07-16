@@ -69,6 +69,15 @@ struct PlanningGroceryView: View {
                     .padding(.top, 20)
                     .padding(.bottom, 10)
                 
+                // SubHeader
+                Text("Grocery List")
+                    .fontWeight(.bold)
+                    .font(.subheadline)
+                    .padding(.trailing, 270)
+                    .padding(.bottom, 10)
+                
+                
+                
                 ScrollView {
                     VStack(spacing: 12) {
                         ForEach($groceryItems) { $item in
