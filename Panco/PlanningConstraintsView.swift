@@ -107,7 +107,7 @@ struct PlanningConstraintsView: View {
                         .font(.headline)
                         .padding()
                         .frame(width: 180, height: 60)
-                        .background(Color.pancoLightGreen)
+                        .background(Color.pancoGreen)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .shadow(radius: 5)
                 }
