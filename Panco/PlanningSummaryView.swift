@@ -92,7 +92,7 @@ struct RecipeCardView: View {
                 
                 Spacer()
                 
-                Text("\(count)")
+                Text("Portions: \(count)")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, alignment: .bottomTrailing)
