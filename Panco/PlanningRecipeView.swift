@@ -168,7 +168,7 @@ struct RecipeCard: View {
             
             // Title
             Text(recipe.title)
-                .font(.title3.bold())
+                .font(.caption.bold())
                 .foregroundColor(.white)
                 .padding(10)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)

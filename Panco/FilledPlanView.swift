@@ -159,9 +159,16 @@ struct FilledPlanView: View {
     
     
     var newPlanButton: some View {
-        Button("tets") {
+        Button("New Plan") {
             rootIsActive.toggle()
         }
+        .foregroundColor(.pancoNeutral)
+        .font(.headline)
+        .padding()
+        .frame(width: 180, height: 60)
+        .background(Color.pancoRed)
+        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .shadow(radius: 5)
     }
     
     var ingredientsPopover: some View {
@@ -188,17 +195,17 @@ struct ShowRecipe: View {
             } placeholder: {
                 Color.gray.opacity(0.3)
             }
-            .frame(width: 150, height: 150)
+            .frame(width: 170, height: 170)
             .cornerRadius(20)
-            .padding(.trailing, 20)
+
             
             RoundedRectangle(cornerRadius: 20)
                 .fill(Color.black.opacity(0.4))
-                .frame(width: 150, height: 150)
-                .padding(.trailing, 20)
+                .frame(width: 170, height: 170)
+  
             
             Text(portion.recipe.title)
-                .font(.title3.bold())
+                .font(.caption.bold())
                 .foregroundColor(.white)
                 .padding(10)
                 .multilineTextAlignment(.leading)
@@ -223,14 +230,17 @@ struct HeaderViewSimple: View {
             } label: {
                 
                 //‼️Can we change this as it gets lost in the layout
-                Image(systemName: "pencil")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 20)
-                    .foregroundStyle(.pancoRed)
-                    .font(.system(size: 20, weight: .bold))
+                Button("Edit") {}
+                    .foregroundColor(Color.pancoNeutral)
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .frame(width: 70, height: 35)
+                    .background(Color.pancoLightRed)
+                    .cornerRadius(30)
+                    .shadow(radius: 2)
+                
+                    
             }
-            .buttonStyle(.plain)
         }
         .padding(.horizontal, 20)
         .padding(.top, 16)

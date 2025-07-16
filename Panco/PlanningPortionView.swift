@@ -104,9 +104,9 @@ struct PlanningPortionView: View {
                 } placeholder: {
                     Color.gray.opacity(0.3)
                 }
-                .frame(width: 150, height: 150)
+                .frame(width: 140, height: 140)
                 .cornerRadius(20)
-                .padding(.leading, 10)
+                .padding(.leading, 20)
                 
                 VStack() {
                     Text(recipePortion.recipe.title)
@@ -127,13 +127,22 @@ struct PlanningPortionView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .foregroundStyle(Color.pancoGreen)
-                                .frame(width: 55)
+                                .frame(width: 40)
                         }
+                        .padding(.leading, 10)
+                        .padding(.bottom, 15)
                         
                         Text("\(Int(recipePortion.portion))")
                             .fontWeight(.bold)
                             .font(.largeTitle)
                             .padding(.horizontal, 10)
+                            .foregroundStyle(.white)
+                            .frame(width: 70, height: 70)
+                            .background(Color.pancoGreen)
+                            .cornerRadius(15)
+                            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+                            .padding(5)
+                            .padding(.bottom, 15)
                         
                         Button {
                             if recipePortion.portion < 10 {
@@ -144,14 +153,15 @@ struct PlanningPortionView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .foregroundStyle(Color.pancoGreen)
-                                .frame(width: 55)
+                                .frame(width: 40)
                         }
+                        .padding(.bottom, 15)
                     }
-                    .padding(.bottom, 45)
+                
                  
 
                 }
-                .padding(.trailing, 20)
+        
                 .padding(.vertical, 10)
             }
             .background(Color.pancoLightRed.opacity(0.15))
@@ -159,6 +169,7 @@ struct PlanningPortionView: View {
             .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
             .frame(width: 375, height: 190)
         }
+    
     }
 
 }
