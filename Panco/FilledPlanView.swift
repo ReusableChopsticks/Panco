@@ -210,6 +210,22 @@ struct FilledPlanView: View {
                 }
                 
                 Spacer()
+                
+                
+                NavigationLink {
+               //     PlanningSummaryView(rootIsActive: $rootIsActive)
+                } label: {
+                    Spacer()
+                    Text("Start Cooking")
+                        .foregroundColor(.pancoNeutral)
+                        .font(.headline)
+                        .frame(width: 180, height: 60)
+                        .background(Color.pancoGreen)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .shadow(radius: 5)
+                    Spacer()
+                }
+            
             }
             .padding()
             .padding(.top, 20)

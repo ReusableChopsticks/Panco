@@ -39,15 +39,16 @@ struct OnboardingAllergyView: View {
                             Text(tag)
                                 .foregroundColor(selectedTags.contains(tag) ? .white : Color(.pancoGreen))
                                 .font(.title3)
+                                .fontWeight(.medium)
                                 .padding(.vertical, 15)
                                 .padding(.horizontal, 12)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .background(selectedTags.contains(tag) ? Color.pancoGreen : Color.clear)
                                 .overlay(
-                                    RoundedRectangle(cornerRadius: 24)
-                                        .stroke(.pancoGreen, lineWidth: 2)
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .stroke(.pancoGreen, lineWidth: 5)
                                 )
-                                .cornerRadius(24)
+                                .cornerRadius(15)
                         }
                         .padding(.horizontal, 30)
                     }
