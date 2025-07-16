@@ -2,8 +2,11 @@ import SwiftUI
 
 struct PlanningConstraintsView: View {
     
-    @State var maxCookingTime: Int = 1 // minutes
+    @State var maxCookingTime: Int = 30 // minutes
     @State var numRecipes: Int = 0
+    
+    private let MIN_COOK_TIME: Int = 30
+    private let MAX_COOK_TIME: Int = 120
     
     @Binding var rootIsActive: Bool
 
@@ -76,7 +79,7 @@ struct PlanningConstraintsView: View {
                 
                 // ⭐️ Time scroll section
                 VStack {
-                    Text("Max. time per cooking session (minutes)")
+                    Text("Max recipe preparation time (minutes)")
                         .font(.title3)
                         .fontWeight(.semibold)
                         .frame(width: 300, height: 50)
@@ -84,7 +87,7 @@ struct PlanningConstraintsView: View {
                         .padding()
                     
                     Picker("Max Cooking Time", selection: $maxCookingTime) {
-                        ForEach(1...120, id: \.self) { minute in
+                        ForEach(MIN_COOK_TIME...MAX_COOK_TIME, id: \.self) { minute in
                             Text("\(minute)").tag(minute)
                         }
                     }
