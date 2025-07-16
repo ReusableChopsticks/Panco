@@ -15,9 +15,10 @@ struct NavigationTabView: View {
     
     var body: some View {
         if isOnboarding {
-            Button("Finish onboarding") {
-                isOnboarding = false
-            }
+            OnboardingRootView(isOnboarding: $isOnboarding)
+//            Button("Finish onboarding") {
+//                isOnboarding = false
+//            }
         } else {
             TabView {
                 Tab("Plan", systemImage: "text.document") {

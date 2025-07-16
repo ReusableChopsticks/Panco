@@ -3,6 +3,8 @@ import SwiftUI
 struct OnboardingDislikeView: View {
     @State private var searchBar: String = ""
     @State private var selectedTags: [String] = []
+    @Binding var isOnboarding: Bool
+    let onContinue: () -> Void
     
     // Simulated tag database
     let allTags: [String] = ["Almonds", "Asparagus", "Avocado", "Banana", "Beans", "Beets", "Capsicum", "Blue cheese", "Broccoli", "Brussels Sprouts", "Cashews", "Cauliflower", "Celery", "Chia seeds", "Chickpeas", "Cilantro (Coriander)", "Coconut", "Cottage Cheese", "Eggplant", "Eggs", "Feta Cheese", "Garlic", "Ginger", "Tomatos", "Onions", "Peas", "Peanuts", "Pineapple", "Potatoes", "Radishes", "Raspberries", "Spinach", "Strawberries", "Sweet Potato", "Tofu", "Turmeric", "Walnuts", "Olives", "Zucchini", "Kale", "Mushroom", "Parsley", "Cucumber", "Carrots", "Mayo"]
@@ -64,12 +66,14 @@ struct OnboardingDislikeView: View {
                     }
                     Spacer()
                     
-                    Button("Continue") {}
+                    Button("Finish") {
+                        isOnboarding = false
+                    }
                         .foregroundColor(.pancoNeutral)
                         .font(.headline)
                         .padding()
                         .frame(width: 180, height: 60)
-                        .background(.pancoLightGreen)
+                        .background(.pancoGreen)
                         .cornerRadius(20)
                         .shadow(radius: 5)
                         .padding(.horizontal, 100)
@@ -144,5 +148,5 @@ struct OnboardingDislikeView: View {
 }
 
 #Preview {
-    OnboardingDislikeView()
+    OnboardingDislikeView(isOnboarding: .constant(true), onContinue: {})
 }

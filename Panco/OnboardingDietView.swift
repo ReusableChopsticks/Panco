@@ -7,6 +7,7 @@ import SwiftUI
 
 struct OnboardingDietView: View {
     @State private var selectedTags: Set<String> = []
+    let onContinue: () -> Void
     
     let tags = ["Vegan", "Vegetarian", "Pescetarian", "Keto", "Halal", "Kosher"]
     
@@ -54,21 +55,23 @@ struct OnboardingDietView: View {
                 
                 Spacer()
                 
-                Button("Continue") {}
-                    .foregroundColor(.white)
-                    .font(.headline)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color(red: 0.52, green: 0.62, blue: 0.56))
-                    .cornerRadius(20)
-                    .shadow(radius: 5)
-                    .padding(.horizontal, 100)
-                    .padding(.bottom, 30)
+//                Button("Continue") {
+//                    onContinue()
+//                }
+//                    .foregroundColor(.white)
+//                    .font(.headline)
+//                    .padding()
+//                    .frame(maxWidth: .infinity)
+//                    .background(Color(red: 0.52, green: 0.62, blue: 0.56))
+//                    .cornerRadius(20)
+//                    .shadow(radius: 5)
+//                    .padding(.horizontal, 100)
+//                    .padding(.bottom, 30)
             }
         }
     }
 }
 #Preview {
-    OnboardingDietView()
+    OnboardingDietView(onContinue: {})
 }
 

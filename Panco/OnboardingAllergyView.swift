@@ -2,6 +2,7 @@ import SwiftUI
 
 struct OnboardingAllergyView: View {
     @State private var selectedTags: Set<String> = []
+    let onContinue: () -> Void
     
     let tags = ["Dairy", "Peanut", "Soy", "Egg", "Seafood", "Sulfite", "Gluten", "Tree Nut", "Sesame", "Shellfish", "Wheat", "Latex"]
     
@@ -9,15 +10,15 @@ struct OnboardingAllergyView: View {
         ZStack {
             Color(.pancoNeutral)
                 .ignoresSafeArea()
-
+            
             
             VStack(alignment: .leading, spacing: 20) {
                 
-                Button("Back", systemImage: "chevron.backward") {}
-                    .foregroundColor(Color.pancoGreen)
-                    .fontWeight(.semibold)
-                    .padding(.top, 30)
-                    .padding(.leading)
+                //                Button("Back", systemImage: "chevron.backward") {}
+                //                    .foregroundColor(Color.pancoGreen)
+                //                    .fontWeight(.semibold)
+                //                    .padding(.top, 30)
+                //                    .padding(.leading)
                 
                 Text("Allergies")
                     .font(.largeTitle)
@@ -54,20 +55,22 @@ struct OnboardingAllergyView: View {
                 
                 Spacer()
                 
-                Button("Continue") {}
-                    .foregroundColor(.white)
-                    .font(.headline)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color(.pancoLightGreen))
-                    .cornerRadius(20)
-                    .shadow(radius: 5)
-                    .padding(.horizontal, 100)
-                    .padding(.bottom, 30)
+//                Button("Continue") {
+//                    onContinue()
+//                }
+//                .foregroundColor(.white)
+//                .font(.headline)
+//                .padding()
+//                .frame(maxWidth: .infinity)
+//                .background(Color(.pancoLightGreen))
+//                .cornerRadius(20)
+//                .shadow(radius: 5)
+//                .padding(.horizontal, 100)
+//                .padding(.bottom, 30)
             }
         }
     }
 }
 #Preview {
-    OnboardingAllergyView()
+    OnboardingAllergyView(onContinue: {})
 }
