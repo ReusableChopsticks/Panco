@@ -46,11 +46,12 @@ struct GroceryRowView: View {
 struct PlanningGroceryView: View {
     @Environment(RecipeManager.self) var recipeManager: RecipeManager
     @State private var groceryItems: [GroceryItem] = [
-        .init(quantity: "100 grams", name: "Beef Mince"),
-        .init(quantity: "1 cup", name: "All purpose flour"),
-        .init(quantity: "3", name: "Eggs"),
-        .init(quantity: "1 bunch", name: "Spring onions"),
-        .init(quantity: "2", name: "Tomatoes"),
+        .init(quantity: "200 grams", name: "Chicken"),
+        .init(quantity: "1 cup", name: "Rice"),
+        .init(quantity: "1 unit", name: "Onion"),
+        .init(quantity: "50 grams", name: "Coriander"),
+        .init(quantity: "1 unit", name: "Cucumber"),
+        .init(quantity: "1 tbsp", name: "Soy Sauce"),
     ]
     
     @Binding var rootIsActive: Bool
@@ -70,10 +71,10 @@ struct PlanningGroceryView: View {
                     .padding(.bottom, 10)
                 
                 // SubHeader
-                Text("Grocery List")
+                Text("Cheesy Chicken Casserole")
                     .fontWeight(.bold)
                     .font(.subheadline)
-                    .padding(.trailing, 270)
+                    .padding(.trailing, 170)
                     .padding(.bottom, 10)
                 
                 
