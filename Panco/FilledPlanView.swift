@@ -15,12 +15,12 @@ extension String: @retroactive Identifiable {
 }
 
 // MARK: - Models
-
 struct Ingredient: Identifiable {
     let id = UUID()
-    let name: String
-    let amount: Double
-    let unit: String
+    var name: String
+    var amount: Double
+    var unit: String
+    var isChecked: Bool = true
 }
 
 // MARK: - Main View
@@ -124,7 +124,10 @@ struct FilledPlanView: View {
 
             VStack(alignment: .leading, spacing: 12) {
                 HStack {
-                    Text(selectedRecipeName ?? "")
+//                    Text(selectedRecipeName ?? "")
+//                        .font(.title)
+//                        .fontWeight(.bold)
+                    Text("Cheesy Chicken Casserole")
                         .font(.title)
                         .fontWeight(.bold)
                     Spacer()
@@ -141,7 +144,7 @@ struct FilledPlanView: View {
                 Image("ChickenCasserole")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: .infinity, height: 210)
+                    .frame(height: 210)
                     .clipped()
                     .cornerRadius(12)
 
