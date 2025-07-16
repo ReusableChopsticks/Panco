@@ -1,7 +1,7 @@
 
 // PlanningRecipeView: For users to select recipes for the week
 // Created by: Jannalyn Tan on 14 July
-// Last edited by: Nikki on 14 July 9.30PM (Sent)
+// Last edited by: Victoria on 16 July 11PM (Pushed)
 
 import SwiftUI
 
@@ -19,12 +19,12 @@ struct PlanningRecipeView: View {
             
             VStack(spacing: 16) {
                 
-//                // Load recipes manually for now
-//                Button("Load Recipes") {
-//                    Task {
-//                        await recipeManager.loadData(maxDuration: 60)
-//                    }
-//                }
+                //                // Load recipes manually for now
+                //                Button("Load Recipes") {
+                //                    Task {
+                //                        await recipeManager.loadData(maxDuration: 60)
+                //                    }
+                //                }
                 
                 HeaderView(title: "Recipe", progress: 0.66)
                 
@@ -130,10 +130,11 @@ struct RecipeGridView: View {
                 ForEach(recipes, id: \.id) { recipe in
                     RecipeCard(
                         recipe: recipe,
-                        isSelected: selectedRecipes.contains(recipe)
-                    ) {
+                        isSelected: selectedRecipes.contains(recipe))
+                    {
                         toggleSelection(for: recipe)
                     }
+                    
                 }
                 FavouriteCard()
             }
@@ -149,7 +150,6 @@ struct RecipeGridView: View {
         }
     }
 }
-
 
 
 struct RecipeCard: View {
@@ -182,6 +182,7 @@ struct RecipeCard: View {
                 .padding(10)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
             
+            
             // Selection overlay
             if isSelected {
                 Image(systemName: "checkmark.circle.fill")
@@ -194,6 +195,9 @@ struct RecipeCard: View {
                     .stroke(Color.pancoRed, lineWidth: 5)
                     .frame(width: 170, height: 170)
             }
+            HeartButton()
+                .padding(.bottom, 128)
+                .padding(.leading, 10)
         }
         .frame(width: 170, height: 170)
         .padding(10)
@@ -227,6 +231,26 @@ struct FavouriteCard: View {
         .padding(10)
     }
 }
+
+
+//favourite button not transferrable between views, just a visual
+
+struct HeartButton: View {
+    @State private var isLiked = false
+    
+    var body: some View {
+        Button(action: {
+            isLiked.toggle()
+        }) {
+            Image(systemName: isLiked ? "heart.fill" : "heart")
+                .foregroundColor(isLiked ? Color.pancoRed : Color.black)
+                .font(.system(size: 30))
+        }
+    }
+}
+
+
+
 
 struct ContinueButtonView: View {
     let selectedRecipes: Set<RecipesResult>
