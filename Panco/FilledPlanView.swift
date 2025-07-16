@@ -32,18 +32,17 @@ struct FilledPlanView: View {
     //    var selectedRecipes: [String] = ["Chicken Rice", "R2", "R3", "R4", "R5"]
     @Binding var rootIsActive : Bool
     
-    //    let groceryList: String
-    //    let chosenRecipes: String
-    
-    
-    
-    
     private let columns = [
         GridItem(.fixed(150), spacing: 40),
         GridItem(.fixed(150), spacing: 40)
     ]
     
     @State private var selectedRecipeName: String?
+    
+    var sampleRecipes: [RecipesResult] = [
+            Panco.RecipesResult(id: 715421, title: "Cheesy Chicken Casserole", image: "CheesyChicken", imageType: "jpg"),
+            Panco.RecipesResult(id: 782601, title: "Fish Tacos", image: "FishTacos", imageType: "jpg")
+        ]
     
     private let sampleIngredients: [Ingredient] = [
         .init(name: "Chicken",   amount: 200, unit: "g"),
@@ -53,6 +52,8 @@ struct FilledPlanView: View {
         .init(name: "Cucumber",  amount: 1,   unit: "unit"),
         .init(name: "Soy Sauce", amount: 1,   unit: "tbsp")
     ]
+    
+    
     
     var body: some View {
         ZStack {
@@ -113,11 +114,6 @@ struct FilledPlanView: View {
         .padding(.horizontal)
     }
     
-    var sampleRecipes: [RecipesResult] = [
-        Panco.RecipesResult(id: 715421, title: "Cheesy Chicken Casserole", image: "CheesyChicken", imageType: "jpg"),
-        Panco.RecipesResult(id: 782601, title: "Fish Tacos", image: "FishTacos", imageType: "jpg")
-    ]
-    
     var recipeGrid: some View {
         ScrollView {
             LazyVGrid(
@@ -135,36 +131,6 @@ struct FilledPlanView: View {
                             .frame(width: 170, height: 170)
                             .padding(10)
                     }
-                
-//                    With proper data from API
-//                ForEach(recipeManager.mealPlan, id: \.id) { portion in
-//                    Button {
-//                        selectedRecipeName = portion.recipe.title
-//                    } label: {
-//                        ShowRecipe(portion: portion)
-//                        .frame(width: 170, height: 170)
-//                        .padding(10)
-//                    }
-
-
-//                    Button {
-//                        selectedRecipeName = recipe.recipe.title
-//                    } label: {
-//                        ZStack(alignment: .bottomLeading) {
-//                            RoundedRectangle(cornerRadius: 20)
-//                                .fill(Color.gray.opacity(0.3))
-//                                .frame(width: 170, height: 170)
-//                            
-//                            Text(recipe.recipe.title)
-//                                .font(.title3.bold())
-//                                .foregroundColor(.white)
-//                                .padding(10)
-//                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-//                        }
-//                    }
-//                    .frame(width: 170, height: 170)
-//                    .padding(10)
-//                    .buttonStyle(.plain)
                 }
             }
             .padding(.horizontal)
@@ -189,83 +155,7 @@ struct FilledPlanView: View {
         ZStack {
             Color.pancoNeutral.ignoresSafeArea()
 
-struct HardCodedRecipe: View {
-    let recipe: RecipesResult
-    var body: some View {
-        ZStack{
-            Image(recipe.image)
-                .resizable()
-            .frame(width: 170, height: 170)
-            .cornerRadius(20)
-
-            
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.black.opacity(0.4))
-                .frame(width: 170, height: 170)
-  
-            
-            Text(recipe.title)
-                .font(.caption.bold())
-                .foregroundColor(.white)
-                .padding(10)
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: 150, maxHeight: 150, alignment: .bottomLeading)
-        }
-    }
-}
-
-struct ShowRecipe: View {
-    let portion: PortionModel
-    var body: some View {
-        ZStack{
-            AsyncImage(url: URL(string: portion.recipe.image)) { img in
-                img.resizable()
-                    .scaledToFill()
-            } placeholder: {
-                Color.gray.opacity(0.3)
-            }
-            .frame(width: 170, height: 170)
-            .cornerRadius(20)
-
-            
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.black.opacity(0.4))
-                .frame(width: 170, height: 170)
-  
-            
-            Text(portion.recipe.title)
-                .font(.caption.bold())
-                .foregroundColor(.white)
-                .padding(10)
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: 150, maxHeight: 150, alignment: .bottomLeading)
-        }
-    }
-}
-
-struct HeaderViewSimple: View {
-    let title: String
-    @Binding var rootIsActive: Bool  // pass binding for navigation
-    
-    var body: some View {
-        HStack {
-            Text(title)
-                .fontWeight(.bold)
-                .font(.largeTitle)
-            Spacer()
-            
-            
-            
-            NavigationLink (destination: PlanningConstraintsView(rootIsActive: $rootIsActive), isActive: $rootIsActive) {
-                //‼️Can we change this as it gets lost in the layout
-                Button("Edit") {}
-                    .foregroundColor(Color.pancoNeutral)
-                    .font(.caption)
-                    .fontWeight(.bold)
-                    .frame(width: 70, height: 35)
-                    .background(Color.pancoLightRed)
-                    .cornerRadius(30)
-                    .shadow(radius: 2)
+            VStack(alignment: .leading, spacing: 16) {
                 
                 // Header
                 HStack {
@@ -326,7 +216,31 @@ struct HeaderViewSimple: View {
         }
     }
 
-    
+    struct HardCodedRecipe: View {
+        let recipe: RecipesResult
+        var body: some View {
+            ZStack{
+                Image(recipe.image)
+                    .resizable()
+                    .scaledToFill()
+                .frame(width: 170, height: 170)
+                .cornerRadius(20)
+
+                
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color.black.opacity(0.4))
+                    .frame(width: 170, height: 170)
+      
+                
+                Text(recipe.title)
+                    .font(.caption.bold())
+                    .foregroundColor(.white)
+                    .padding(10)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: 150, maxHeight: 150, alignment: .bottomLeading)
+            }
+        }
+    }
     
     struct ShowRecipe: View {
         let portion: PortionModel
