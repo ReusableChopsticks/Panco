@@ -27,8 +27,9 @@ struct Ingredient: Identifiable {
 
 struct FilledPlanView: View {
     @Environment(RecipeManager.self) var recipeManager: RecipeManager
-    @Binding var rootIsActive : Bool
+    @Binding var rootIsActive: Bool
     @State private var selectedRecipeName: String?
+    @State private var showCookingView = false
 
     private let sampleIngredients: [Ingredient] = [
         .init(name: "Chicken", amount: 200, unit: "g"),
@@ -85,6 +86,9 @@ struct FilledPlanView: View {
         }
         .popover(item: $selectedRecipeName) { _ in
             ingredientsPopover
+        }
+        .fullScreenCover(isPresented: $showCookingView) {
+            StartCooking(rootIsActive: $rootIsActive)
         }
     }
 
@@ -145,28 +149,26 @@ struct FilledPlanView: View {
                     Text("• \(item.name): \(item.amount.clean) \(item.unit)")
                         .font(.body)
                 }
-                
+
                 Spacer()
 
                 HStack {
                     Spacer()
-                    
-                    Button("Start Cooking") {
-                        // your action here
+                    Button {
+                        selectedRecipeName = nil
+                        showCookingView = true
+                    } label: {
+                        Text("Start Cooking")
+                            .foregroundColor(.pancoNeutral)
+                            .font(.headline)
+                            .frame(width: 180, height: 60)
+                            .background(Color.pancoGreen)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .shadow(radius: 5)
                     }
-                    .foregroundColor(.pancoNeutral)
-                    .font(.headline)
-                    .frame(width: 180, height: 60)
-                    .background(Color.pancoGreen)
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                    .shadow(radius: 5)
-                    
                     Spacer()
                 }
                 .padding(.vertical)
-
-            
-                
             }
             .padding()
             .cornerRadius(15)
