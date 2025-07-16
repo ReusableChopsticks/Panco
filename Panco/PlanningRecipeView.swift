@@ -177,7 +177,7 @@ struct RecipeCard: View {
             
             // Title
             Text(recipe.title)
-                .font(.caption.bold())
+                .font(.title3.bold())
                 .foregroundColor(.white)
                 .padding(10)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
@@ -243,8 +243,9 @@ struct HeartButton: View {
             isLiked.toggle()
         }) {
             Image(systemName: isLiked ? "heart.fill" : "heart")
-                .foregroundColor(isLiked ? Color.pancoRed : Color.black)
+                .foregroundColor(isLiked ? Color.pancoRed : Color.white)
                 .font(.system(size: 30))
+            
         }
     }
 }
