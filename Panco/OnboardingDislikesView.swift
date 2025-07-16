@@ -7,7 +7,7 @@ struct OnboardingDislikeView: View {
     let onContinue: () -> Void
     
     // Simulated tag database
-    let allTags: [String] = ["Almonds", "Asparagus", "Avocado", "Banana", "Beans", "Beets", "Capsicum", "Blue cheese", "Broccoli", "Brussels Sprouts", "Cashews", "Cauliflower", "Celery", "Chia seeds", "Chickpeas", "Cilantro (Coriander)", "Coconut", "Cottage Cheese", "Eggplant", "Eggs", "Feta Cheese", "Garlic", "Ginger", "Tomatos", "Onions", "Peas", "Peanuts", "Pineapple", "Potatoes", "Radishes", "Raspberries", "Spinach", "Strawberries", "Sweet Potato", "Tofu", "Turmeric", "Walnuts", "Olives", "Zucchini", "Kale", "Mushroom", "Parsley", "Cucumber", "Carrots", "Mayo"]
+    let allTags: [String] = ["Almonds", "Asparagus", "Avocado", "Banana", "Beans", "Beets", "Capsicum", "Blue cheese", "Broccoli", "Brussels Sprouts", "Cashews", "Cauliflower", "Celery", "Chia seeds", "Chickpeas", "Cilantro (Coriander)", "Coconut", "Cottage Cheese", "Eggplant", "Eggs", "Feta Cheese", "Garlic", "Ginger", "Tomatos", "Onions", "Peas", "Peanuts", "Pineapple", "Potatoes", "Radishes", "Raspberries", "Spinach", "Strawberries", "Sweet Potato", "Tofu", "Turmeric", "Walnuts", "Olives", "Zucchini", "Kale", "Mushroom", "Parsley", "Cucumber", "Carrots", "Mayo"].sorted()
     
     // Filtered results based on search input
     var filteredTags: [String] {

@@ -32,8 +32,8 @@ struct FilledPlanView: View {
     //    var selectedRecipes: [String] = ["Chicken Rice", "R2", "R3", "R4", "R5"]
     @Binding var rootIsActive : Bool
     
-//    let groceryList: String
-//    let chosenRecipes: String
+    //    let groceryList: String
+    //    let chosenRecipes: String
     
     
     
@@ -127,29 +127,29 @@ struct FilledPlanView: View {
                         selectedRecipeName = portion.recipe.title
                     } label: {
                         ShowRecipe(portion: portion)
-                        .frame(width: 170, height: 170)
-                        .padding(10)
+                            .frame(width: 170, height: 170)
+                            .padding(10)
                     }
-
-
-//                    Button {
-//                        selectedRecipeName = recipe.recipe.title
-//                    } label: {
-//                        ZStack(alignment: .bottomLeading) {
-//                            RoundedRectangle(cornerRadius: 20)
-//                                .fill(Color.gray.opacity(0.3))
-//                                .frame(width: 170, height: 170)
-//                            
-//                            Text(recipe.recipe.title)
-//                                .font(.title3.bold())
-//                                .foregroundColor(.white)
-//                                .padding(10)
-//                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-//                        }
-//                    }
-//                    .frame(width: 170, height: 170)
-//                    .padding(10)
-//                    .buttonStyle(.plain)
+                    
+                    
+                    //                    Button {
+                    //                        selectedRecipeName = recipe.recipe.title
+                    //                    } label: {
+                    //                        ZStack(alignment: .bottomLeading) {
+                    //                            RoundedRectangle(cornerRadius: 20)
+                    //                                .fill(Color.gray.opacity(0.3))
+                    //                                .frame(width: 170, height: 170)
+                    //
+                    //                            Text(recipe.recipe.title)
+                    //                                .font(.title3.bold())
+                    //                                .foregroundColor(.white)
+                    //                                .padding(10)
+                    //                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+                    //                        }
+                    //                    }
+                    //                    .frame(width: 170, height: 170)
+                    //                    .padding(10)
+                    //                    .buttonStyle(.plain)
                 }
             }
             .padding(.horizontal)
@@ -171,95 +171,127 @@ struct FilledPlanView: View {
     }
     
     var ingredientsPopover: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(selectedRecipeName ?? "").font(.title).bold(true)
-            
-            Link("View recipe online",
-                 destination: URL(string: "https://www.allrecipes.com/recipe/80934/fairy-bread/")!).padding(.bottom, 20)
-            
-            Text("Ingredients").font(.title3).bold(true)
-            ForEach(sampleIngredients) { item in
-                Text("\(item.name): \(item.amount.clean) \(item.unit)")
-            }
-            Divider()
-            Button("Close") {
-                selectedRecipeName = nil
-            }
-            .padding(.top, 8)
-        }
-        .padding()
-    }
-}
+        ZStack {
+            Color.pancoNeutral.ignoresSafeArea()
 
-struct ShowRecipe: View {
-    let portion: PortionModel
-    var body: some View {
-        ZStack{
-            AsyncImage(url: URL(string: portion.recipe.image)) { img in
-                img.resizable()
-            } placeholder: {
-                Color.gray.opacity(0.3)
-            }
-            .frame(width: 170, height: 170)
-            .cornerRadius(20)
-
-            
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.black.opacity(0.4))
-                .frame(width: 170, height: 170)
-  
-            
-            Text(portion.recipe.title)
-                .font(.caption.bold())
-                .foregroundColor(.white)
-                .padding(10)
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: 150, maxHeight: 150, alignment: .bottomLeading)
-        }
-    }
-}
-
-struct HeaderViewSimple: View {
-    let title: String
-    @Binding var rootIsActive: Bool  // pass binding for navigation
-    
-    var body: some View {
-        HStack {
-            Text(title)
-                .fontWeight(.bold)
-                .font(.largeTitle)
-            Spacer()
-            
-            
-            
-            NavigationLink (destination: PlanningConstraintsView(rootIsActive: $rootIsActive), isActive: $rootIsActive) {
-                //‼️Can we change this as it gets lost in the layout
-                Button("Edit") {}
-                    .foregroundColor(Color.pancoNeutral)
-                    .font(.caption)
-                    .fontWeight(.bold)
-                    .frame(width: 70, height: 35)
-                    .background(Color.pancoLightRed)
-                    .cornerRadius(30)
-                    .shadow(radius: 2)
+            VStack(alignment: .leading, spacing: 16) {
                 
-                    
+                // Header
+                HStack {
+                    Text(selectedRecipeName ?? "")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    Spacer()
+                    Button {
+                        selectedRecipeName = nil
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .resizable()
+                            .frame(width: 40, height: 40)
+                            .foregroundStyle(Color.pancoGreen)
+                    }
+                }
+                
+                // Link
+                Link("View recipe online",
+                     destination: URL(string: "https://www.allrecipes.com/recipe/80934/fairy-bread/")!)
+                .font(.subheadline)
+                .foregroundColor(.pancoGreen)
+                .padding(.bottom, 8)
+
+                // Ingredients
+                Text("Ingredients")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                
+                ForEach(sampleIngredients) { item in
+                    Text("• \(item.name): \(item.amount.clean) \(item.unit)")
+                        .font(.body)
+                }
+                
+                Spacer()
+            }
+            .padding()
+            .padding(.top, 20)
+            .cornerRadius(15)
+            .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+            .frame(width: 350)
+        }
+    }
+
+    
+    
+    struct ShowRecipe: View {
+        let portion: PortionModel
+        var body: some View {
+            ZStack{
+                AsyncImage(url: URL(string: portion.recipe.image)) { img in
+                    img.resizable()
+                } placeholder: {
+                    Color.gray.opacity(0.3)
+                }
+                .frame(width: 170, height: 170)
+                .cornerRadius(20)
+                
+                
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color.black.opacity(0.4))
+                    .frame(width: 170, height: 170)
+                
+                
+                Text(portion.recipe.title)
+                    .font(.caption.bold())
+                    .foregroundColor(.white)
+                    .padding(10)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: 150, maxHeight: 150, alignment: .bottomLeading)
             }
         }
-        .padding(.horizontal, 20)
-        .padding(.top, 16)
+    }
+    
+    struct HeaderViewSimple: View {
+        let title: String
+        @Binding var rootIsActive: Bool  // pass binding for navigation
+        
+        var body: some View {
+            HStack {
+                Text(title)
+                    .fontWeight(.bold)
+                    .font(.largeTitle)
+                Spacer()
+                
+                
+                
+                NavigationLink (destination: PlanningConstraintsView(rootIsActive: $rootIsActive), isActive: $rootIsActive) {
+                    
+                    Button("Edit") {}
+                        .foregroundColor(Color.pancoNeutral)
+                        .font(.caption)
+                        .fontWeight(.bold)
+                        .frame(width: 70, height: 35)
+                        .background(Color.pancoLightRed)
+                        .cornerRadius(30)
+                        .shadow(radius: 2)
+                    
+                    
+                }
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 16)
+        }
     }
 }
-
-
-// MARK: - Preview
-
-#Preview {
-    NavigationStack {
-        FilledPlanView(
-            rootIsActive: .constant(true),
-//            groceryList: "Rice, Eggs",
-//            chosenRecipes: "Chicken Rice, Soup",
-        ).environment(RecipeManager())
+    
+    
+    // MARK: - Preview
+    
+    #Preview {
+        NavigationStack {
+            FilledPlanView(
+                rootIsActive: .constant(true),
+                //            groceryList: "Rice, Eggs",
+                //            chosenRecipes: "Chicken Rice, Soup",
+            ).environment(RecipeManager())
+        }
     }
-}
+    
