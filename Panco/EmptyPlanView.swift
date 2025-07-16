@@ -6,10 +6,10 @@ import SwiftUI
 
 struct EmptyPlanView: View {
     
-    @State var isActive : Bool = false
+//    @State var isActive : Bool = false
+    @Binding var rootIsActive : Bool
     
     var body: some View {
-        NavigationView {
             ZStack {
                 //Background color
                 Color(.pancoNeutral)
@@ -49,8 +49,13 @@ struct EmptyPlanView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(height:200)
+
                     
-                    NavigationLink (destination: PlanningConstraintsView(rootIsActive: $isActive), isActive: $isActive) {
+                    NavigationLink(
+                        destination: PlanningConstraintsView(rootIsActive: $rootIsActive),
+                        isActive: $rootIsActive
+                        )
+                    {
                         Text("New Plan")
                             .foregroundColor(.pancoNeutral)
                             .font(.headline)
@@ -59,17 +64,29 @@ struct EmptyPlanView: View {
                             .background(Color.pancoRed)
                             .clipShape(RoundedRectangle(cornerRadius: 20))
                             .shadow(radius: 5)
-                    }
-                    .padding(.top, 105 )
+                    }.padding(.top, 105 )
+                    
+//                    NavigationLink {
+//                        
+//                    } label: {
+//                        Text("New Plan")
+//                            .foregroundColor(.pancoNeutral)
+//                            .font(.headline)
+//                            .padding()
+//                            .frame(width: 180, height: 60)
+//                            .background(Color.pancoRed)
+//                            .clipShape(RoundedRectangle(cornerRadius: 20))
+//                            .shadow(radius: 5)
+//                    }
+//                    .padding(.top, 105 )
                     
                     
                     
                 }
             }//VStack end
-        }//ZStack end
     }//body end
 }//Struct end
 
 #Preview {
-    EmptyPlanView().environment(RecipeManager())
+    EmptyPlanView(rootIsActive: .constant(false)).environment(RecipeManager())
 }

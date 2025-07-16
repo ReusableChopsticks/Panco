@@ -30,12 +30,12 @@ struct Ingredient: Identifiable {
 struct FilledPlanView: View {
     @Environment(RecipeManager.self) var recipeManager: RecipeManager
     //    var selectedRecipes: [String] = ["Chicken Rice", "R2", "R3", "R4", "R5"]
+    @Binding var rootIsActive : Bool
+    
+//    let groceryList: String
+//    let chosenRecipes: String
     
     
-    let groceryList: String
-    let chosenRecipes: String
-    
-    @Binding var rootIsActive: Bool
     
     
     private let columns = [
@@ -124,8 +124,7 @@ struct FilledPlanView: View {
             ) {
                 ForEach(recipeManager.mealPlan, id: \.id) { portion in
                     Button {
-                        selectedRecipeName = "WOOOW"
-                        print("cool")
+                        selectedRecipeName = portion.recipe.title
                     } label: {
                         ShowRecipe(portion: portion)
                         .frame(width: 170, height: 170)
@@ -173,6 +172,12 @@ struct FilledPlanView: View {
     
     var ingredientsPopover: some View {
         VStack(alignment: .leading, spacing: 8) {
+            Text(selectedRecipeName ?? "").font(.title).bold(true)
+            
+            Link("View recipe online",
+                 destination: URL(string: "https://www.allrecipes.com/recipe/80934/fairy-bread/")!).padding(.bottom, 20)
+            
+            Text("Ingredients").font(.title3).bold(true)
             ForEach(sampleIngredients) { item in
                 Text("\(item.name): \(item.amount.clean) \(item.unit)")
             }
@@ -225,10 +230,9 @@ struct HeaderViewSimple: View {
                 .font(.largeTitle)
             Spacer()
             
-            NavigationLink {
-                PlanningConstraintsView(rootIsActive: $rootIsActive)
-            } label: {
-                
+            
+            
+            NavigationLink (destination: PlanningConstraintsView(rootIsActive: $rootIsActive), isActive: $rootIsActive) {
                 //‼️Can we change this as it gets lost in the layout
                 Button("Edit") {}
                     .foregroundColor(Color.pancoNeutral)
@@ -253,9 +257,9 @@ struct HeaderViewSimple: View {
 #Preview {
     NavigationStack {
         FilledPlanView(
-            groceryList: "Rice, Eggs",
-            chosenRecipes: "Chicken Rice, Soup",
-            rootIsActive: .constant(true)
+            rootIsActive: .constant(true),
+//            groceryList: "Rice, Eggs",
+//            chosenRecipes: "Chicken Rice, Soup",
         ).environment(RecipeManager())
     }
 }
