@@ -30,12 +30,12 @@ struct Ingredient: Identifiable {
 struct FilledPlanView: View {
     @Environment(RecipeManager.self) var recipeManager: RecipeManager
     //    var selectedRecipes: [String] = ["Chicken Rice", "R2", "R3", "R4", "R5"]
+    @Binding var rootIsActive : Bool
+    
+//    let groceryList: String
+//    let chosenRecipes: String
     
     
-    let groceryList: String
-    let chosenRecipes: String
-    
-    @Binding var rootIsActive: Bool
     
     
     private let columns = [
@@ -218,10 +218,9 @@ struct HeaderViewSimple: View {
                 .font(.largeTitle)
             Spacer()
             
-            NavigationLink {
-                PlanningConstraintsView(rootIsActive: $rootIsActive)
-            } label: {
-                
+            
+            
+            NavigationLink (destination: PlanningConstraintsView(rootIsActive: $rootIsActive), isActive: $rootIsActive) {
                 //‼️Can we change this as it gets lost in the layout
                 Image(systemName: "pencil")
                     .resizable()
@@ -243,9 +242,9 @@ struct HeaderViewSimple: View {
 #Preview {
     NavigationStack {
         FilledPlanView(
-            groceryList: "Rice, Eggs",
-            chosenRecipes: "Chicken Rice, Soup",
-            rootIsActive: .constant(true)
+            rootIsActive: .constant(true),
+//            groceryList: "Rice, Eggs",
+//            chosenRecipes: "Chicken Rice, Soup",
         ).environment(RecipeManager())
     }
 }

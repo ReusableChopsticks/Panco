@@ -44,6 +44,7 @@ struct GroceryRowView: View {
 
 // Main View
 struct PlanningGroceryView: View {
+    @Environment(RecipeManager.self) var recipeManager: RecipeManager
     @State private var groceryItems: [GroceryItem] = [
         .init(quantity: "100 grams", name: "Beef Mince"),
         .init(quantity: "1 cup", name: "All purpose flour"),
@@ -78,12 +79,9 @@ struct PlanningGroceryView: View {
                 }
                 
                 // Navigation Button
-                NavigationLink {
-                    FilledPlanView(
-                        groceryList: "From Grocery View",
-                        chosenRecipes: "",
-                        rootIsActive: $rootIsActive
-                    )
+                Button {
+                    rootIsActive = false
+                    recipeManager.notEmpty = true
                 } label: {
                     Text("Done")
                         .foregroundColor(Color.pancoNeutral)
@@ -93,7 +91,23 @@ struct PlanningGroceryView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .shadow(radius: 5)
                 }
-                .padding(.bottom, 30)
+
+//                NavigationLink {
+//                    FilledPlanView(
+//                        groceryList: "From Grocery View",
+//                        chosenRecipes: "",
+//                        rootIsActive: $rootIsActive
+//                    )
+//                } label: {
+//                    Text("Done")
+//                        .foregroundColor(Color.pancoNeutral)
+//                        .font(.headline)
+//                        .frame(width: 180, height: 60)
+//                        .background(Color.pancoLightGreen)
+//                        .clipShape(RoundedRectangle(cornerRadius: 20))
+//                        .shadow(radius: 5)
+//                }
+//                .padding(.bottom, 30)
             }
         }
         // Share button in nav bar
@@ -111,6 +125,6 @@ struct PlanningGroceryView: View {
 
 #Preview {
     NavigationView {
-        PlanningGroceryView(rootIsActive: .constant(true))
+        PlanningGroceryView(rootIsActive: .constant(true)).environment(RecipeManager())
     }
 }

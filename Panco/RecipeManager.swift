@@ -19,6 +19,8 @@ import SwiftUI
     var mealPlan: [PortionModel] = PortionModel.sampleData
     var history: [MealPlanHistoryModel] = []
     
+    var notEmpty: Bool = false
+    
     var allergies: [String] = []
     var dislikes: [String] = []
     var diet: [String] = []

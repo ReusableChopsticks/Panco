@@ -45,11 +45,11 @@ struct PlanningSummaryView: View {
                     NavigationLink() {
                         PlanningGroceryView(rootIsActive: $rootIsActive)
                     } label: {
-                        Text("Continue")
+                        Text("Save")
                             .foregroundColor(Color.pancoNeutral)
                             .font(.headline)
                             .frame(width: 180, height: 60)
-                            .background(Color.pancoLightGreen)
+                            .background(Color.pancoGreen)
                             .clipShape(.rect(cornerRadius: 20))
                             .shadow(radius: 5)
                     }.onTapGesture {

@@ -11,6 +11,8 @@ struct NavigationTabView: View {
     @Environment(RecipeManager.self) var recipeManager: RecipeManager
     @State private var isOnboarding = true
     
+    
+    
     var body: some View {
         if isOnboarding {
             Button("Finish onboarding") {
@@ -19,7 +21,7 @@ struct NavigationTabView: View {
         } else {
             TabView {
                 Tab("Plan", systemImage: "text.document") {
-                    EmptyPlanView().environment(recipeManager)
+                    RootPlanView().environment(recipeManager)
                 }
                 Tab("Favourites", systemImage: "heart") {
                     FavouritesView().environment(recipeManager)

@@ -9,16 +9,20 @@ import SwiftUI
 
 struct RootPlanView: View {
     @Environment(RecipeManager.self) var recipeManager: RecipeManager
+    @State private var isActive : Bool = false
     
     var body: some View {
-        if recipeManager.history.isEmpty {
-            EmptyPlanView()
-        } else {
-//            FilledPlanView()
+        NavigationStack {
+            if !recipeManager.notEmpty {
+                EmptyPlanView(rootIsActive: $isActive)
+            } else {
+                FilledPlanView(rootIsActive: $isActive)
+            }
         }
     }
 }
 
 #Preview {
-    RootPlanView().environment(RecipeManager())
+    RootPlanView()
+        .environment(RecipeManager())
 }
