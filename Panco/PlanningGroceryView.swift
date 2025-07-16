@@ -1,94 +1,133 @@
 import SwiftUI
 
-// Data Model
-struct GroceryItem: Identifiable {
-    let id = UUID()
-    let quantity: String
-    let name: String
-    var isChecked: Bool = true
-}
-
-// Row View
-struct GroceryRowView: View {
-    @Binding var item: GroceryItem
-    // Removed rootIsActive since it wasn’t used in the row
+// Row View for an Ingredient
+struct IngredientRowView: View {
+    @Binding var ingredient: Ingredient
+    
+    func formatSimpleDecimal(num: Double) -> String {
+        if num >= 1 {
+            return num.formatted()
+        }
+        else if num.isEqual(to: 0.5) {
+            return "1/2"
+        } else if num.isEqual(to: 0.25) {
+            return "1/4"
+        } else {
+            return "unsupported decimal :("
+        }
+    }
+    
     var body: some View {
         HStack(spacing: 15) {
-            // Checkbox Icon
-            Image(systemName: item.isChecked ? "checkmark.square.fill" : "square")
+            // Checkbox
+            Image(systemName: ingredient.isChecked ? "checkmark.square.fill" : "square")
                 .font(.title2)
                 .foregroundColor(Color.pancoGreen)
                 .onTapGesture {
-                    item.isChecked.toggle()
+                    ingredient.isChecked.toggle()
                 }
             
             (
-                Text(item.quantity)
-                    .font(.title3)
+                Text("\(formatSimpleDecimal(num: ingredient.amount)) \(ingredient.unit)")
+                    .font(.body)
                     .fontWeight(.semibold)
                     .foregroundStyle(Color.pancoGreen)
-                + Text(" \(item.name)")
-                    .font(.title3)
+                + Text(" \(ingredient.name)")
+                    .font(.body)
             )
             .padding(.vertical, 20)
             
             Spacer()
         }
-        .padding(.top,5)
-        .padding(.bottom,5)
+        .padding(.vertical, 1)
         .padding(.horizontal, 20)
         .background(Color.pancoLightRed.opacity(0.15))
         .cornerRadius(15)
     }
 }
 
-// Main View
+// Section View for a recipe
+struct RecipeIngredientsSection: View {
+    let title: String
+    @Binding var ingredients: [Ingredient]
+    
+    var body: some View {
+        VStack {
+            Text(title)
+                .fontWeight(.bold)
+                .font(.title2)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            ForEach($ingredients) { $ingredient in
+                IngredientRowView(ingredient: $ingredient)
+            }
+        }.padding(.horizontal, 6).padding(.bottom, 20)
+    }
+        
+}
+
+// Main Grocery View
 struct PlanningGroceryView: View {
     @Environment(RecipeManager.self) var recipeManager: RecipeManager
-    @State private var groceryItems: [GroceryItem] = [
-        .init(quantity: "200 grams", name: "Chicken"),
-        .init(quantity: "1 cup", name: "Rice"),
-        .init(quantity: "1 unit", name: "Onion"),
-        .init(quantity: "50 grams", name: "Coriander"),
-        .init(quantity: "1 unit", name: "Cucumber"),
-        .init(quantity: "1 tbsp", name: "Soy Sauce"),
+    
+    // Now using Ingredient model directly
+    @State private var ingredients: [Ingredient] = [
+        .init(name: "Chicken", amount: 200, unit: "grams"),
+        .init(name: "Rice", amount: 1, unit: "cup"),
+        .init(name: "Onion", amount: 1, unit: "unit"),
+        .init(name: "Coriander", amount: 50, unit: "grams"),
+        .init(name: "Cucumber", amount: 1, unit: "unit"),
+        .init(name: "Soy Sauce", amount: 1, unit: "tbsp")
     ]
     
-    @Binding var rootIsActive: Bool
+    @State private var fishTacoIngredients: [Ingredient] = [
+        .init(name: "White Fish Fillets", amount: 500, unit: "grams"),
+        .init(name: "Corn Tortillas", amount: 8, unit: "pieces"),
+        .init(name: "Cabbage", amount: 2, unit: "cups"),
+        .init(name: "Lime", amount: 2, unit: "units"),
+        .init(name: "Sour Cream", amount: 0.5, unit: "cup"),
+        .init(name: "Mayonnaise", amount: 0.25, unit: "cup"),
+        .init(name: "Garlic", amount: 2, unit: "cloves"),
+        .init(name: "Chili Powder", amount: 1, unit: "tsp"),
+        .init(name: "Cumin", amount: 1, unit: "tsp"),
+        .init(name: "Olive Oil", amount: 2, unit: "tbsp"),
+        .init(name: "Fresh Cilantro", amount: 0.25, unit: "cup"),
+        .init(name: "Salt", amount: 0.5, unit: "tsp"),
+        .init(name: "Black Pepper", amount: 0.25, unit: "tsp")
+    ]
 
+    
+    @Binding var rootIsActive: Bool
+    
     var body: some View {
         ZStack {
-            Color.pancoNeutral
-                .ignoresSafeArea()
+            Color.pancoNeutral.ignoresSafeArea()
             
             VStack {
                 // Header
                 Text("Grocery List")
                     .fontWeight(.bold)
                     .font(.largeTitle)
-                    .padding(.trailing, 180)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 20)
                     .padding(.top, 20)
-                    .padding(.bottom, 10)
-                
-                // SubHeader
-                Text("Cheesy Chicken Casserole")
-                    .fontWeight(.bold)
-                    .font(.subheadline)
-                    .padding(.trailing, 170)
-                    .padding(.bottom, 10)
-                
-                
                 
                 ScrollView {
                     VStack(spacing: 12) {
-                        ForEach($groceryItems) { $item in
-                            GroceryRowView(item: $item)
-                        }
+                        RecipeIngredientsSection(
+                            title: "Cheesy Chicken Casserole",
+                            ingredients: $ingredients
+                        )
+                        
+                        RecipeIngredientsSection(
+                            title: "Fish Tacos",
+                            ingredients: $fishTacoIngredients
+                        )
                     }
                     .padding(.horizontal)
                 }
                 
-                // Navigation Button
+                // Done button
                 Button {
                     rootIsActive = false
                     recipeManager.notEmpty = true
@@ -101,30 +140,13 @@ struct PlanningGroceryView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .shadow(radius: 5)
                 }
-
-//                NavigationLink {
-//                    FilledPlanView(
-//                        groceryList: "From Grocery View",
-//                        chosenRecipes: "",
-//                        rootIsActive: $rootIsActive
-//                    )
-//                } label: {
-//                    Text("Done")
-//                        .foregroundColor(Color.pancoNeutral)
-//                        .font(.headline)
-//                        .frame(width: 180, height: 60)
-//                        .background(Color.pancoLightGreen)
-//                        .clipShape(RoundedRectangle(cornerRadius: 20))
-//                        .shadow(radius: 5)
-//                }
-//                .padding(.bottom, 30)
+                .padding(.bottom, 20)
             }
         }
-        // Share button in nav bar
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                    // Add share functionality here
+                    // Share functionality here
                 }) {
                     Image(systemName: "square.and.arrow.up")
                 }
@@ -133,8 +155,12 @@ struct PlanningGroceryView: View {
     }
 }
 
+
+
+// Preview
 #Preview {
     NavigationView {
-        PlanningGroceryView(rootIsActive: .constant(true)).environment(RecipeManager())
+        PlanningGroceryView(rootIsActive: .constant(true))
+            .environment(RecipeManager())
     }
 }
