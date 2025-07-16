@@ -112,9 +112,10 @@ struct PlanningPortionView: View {
                 VStack() {
                     Text(recipePortion.recipe.title)
                         .font(.subheadline)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.top, 20)
-                        .padding(.leading, 2)
+                        .padding(.leading, 20)
                     
                     Spacer()
                     

@@ -30,18 +30,7 @@ struct PlanningSummaryView: View {
                         .padding(.bottom, 100)
                     }
                     
-                    //                    // Floating button above scroll
-                    //                    Button("Save") {}
-                    //                        .foregroundColor(.pancoNeutral)
-                    //                        .font(.headline)
-                    //                        .padding()
-                    //                        .frame(width: 180, height: 60)
-                    //                        .background(.pancoGreen)
-                    //                        .cornerRadius(20)
-                    //                        .shadow(radius: 5)
-                    //                        .padding(.horizontal, 100)
-                    //                        .padding(.bottom, 30)
-                    
+        
                     NavigationLink() {
                         PlanningGroceryView(rootIsActive: $rootIsActive)
                     } label: {
@@ -87,17 +76,21 @@ struct RecipeCardView: View {
             
             VStack {
                 Text(title)
-                    .font(.title3)
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding(.top, 10)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 20)
+                    .padding(.top, 20)
                 
                 Spacer()
                 
-                Text("Portions: \(count)")
+                Text("x \(count)")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, alignment: .bottomTrailing)
-            }.padding(.vertical, 11).padding(.trailing, 20)
+            }.padding(.vertical, 11)
+                .padding(.trailing, 20)
+                .padding(.bottom, 20)
         }
         .background(.pancoLightRed.opacity(0.15))
         .frame(width: 375, height: 190)

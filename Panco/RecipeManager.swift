@@ -14,7 +14,7 @@ import SwiftUI
     private let API_KEY = "5808fdadcfa04697abafb3f0dea869eb"
     
     static var sampleRecipes: [RecipesResult] = [
-        Panco.RecipesResult(id: 715421, title: "Cheesy Chicken Casserole", image: "https://img.spoonacular.com/recipes/715421-312x231.jpg", imageType: "jpg"),
+        Panco.RecipesResult(id: 715421, title: "Cheesy Chicken Casserole", image: "https://www.jocooks.com/wp-content/uploads/2018/12/chicken-broccoli-rice-casserole-1-10-500x500.jpg", imageType: "jpg"),
         Panco.RecipesResult(id: 782601, title: "Fish Tacos", image: "https://www.seriouseats.com/thmb/y3Qf-ciu-nzLgYeJzK4xWoabibQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/SEA-M7011302_crunchy_fish_tacos6556-JenCausey-f8285ed3d8674b25bf16d027034fc41b.jpg", imageType: "jpg"),
         Panco.RecipesResult(id: 716406, title: "Asparagus and Pea Soup: Real Convenience Food", image: "https://img.spoonacular.com/recipes/716406-312x231.jpg", imageType: "jpg"),
         Panco.RecipesResult(id: 644387, title: "Garlicky Kale", image: "https://img.spoonacular.com/recipes/644387-312x231.jpg", imageType: "jpg"),
