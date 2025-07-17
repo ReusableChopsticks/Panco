@@ -65,9 +65,18 @@ struct FilledPlanView: View {
                             Button {
                                 selectedRecipeName = recipe.title
                             } label: {
-                                HardCodedRecipe(recipe: recipe)
-                                    .frame(width: 170, height: 170)
-                                    .padding(10)
+                                ZStack{
+                                    HardCodedRecipe(recipe: recipe)
+                                        .frame(width: 170, height: 170)
+                                        .padding(10)
+                                    Image(systemName: "heart.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 30, height: 30)
+                                        .padding(.trailing, 115)
+                                        .padding(.bottom, 115)
+                                        .foregroundStyle(Color.pancoRed)
+                                }
                             }
                         }
                     }
