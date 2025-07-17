@@ -234,7 +234,7 @@ struct HeaderViewSimple: View {
                 .fontWeight(.bold)
                 .font(.largeTitle)
             Spacer()
-            NavigationLink(destination: PlanningConstraintsView(rootIsActive: $rootIsActive), isActive: $rootIsActive) {
+            NavigationLink(destination: PlanningRecipeView(rootIsActive: $rootIsActive), isActive: $rootIsActive) {
                 Button("Edit") {}
                     .foregroundColor(.pancoNeutral)
                     .font(.caption)

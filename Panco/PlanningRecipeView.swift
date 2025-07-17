@@ -87,7 +87,7 @@ struct SurpriseButtonsView: View {
             Button("Surprise Me") {
                 selectedRecipes.removeAll()
                 
-                let numberToSelect = min(3, recipes.count)
+                let numberToSelect = min(2, recipes.count)
                 selectedRecipes = Set(recipes.shuffled().prefix(numberToSelect))
             }
             .foregroundColor(Color.pancoNeutral)
