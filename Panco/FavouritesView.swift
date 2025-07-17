@@ -4,7 +4,7 @@ struct FavouritesView: View {
     
     @State private var searchBar: String = ""
     
-    let recipeImages = ["Recipe 1", "Recipe 2", "Recipe 3", "Recipe 4", "Recipe 5"]
+    let recipeImages = ["Steak", "Tuna Fritters", "Stir Fry Beef", "Tofu Bowl", "Pizza"]
     
     let columns = [
         GridItem(.fixed(150), spacing: 40),
