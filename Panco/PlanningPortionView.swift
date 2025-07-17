@@ -112,7 +112,7 @@ struct PlanningPortionView: View {
                     
                     HStack {
                         Button {
-                            if recipePortion.portion > 0 {
+                            if recipePortion.portion > 1 {
                                 recipePortion.decrementPortion()
                             }
                         } label: {
