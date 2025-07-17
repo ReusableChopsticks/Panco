@@ -182,6 +182,8 @@ struct RecipeCard: View {
                 .padding(10)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
             
+
+            
             
             // Selection overlay
             if isSelected {
@@ -242,8 +244,8 @@ struct HeartButton: View {
         Button(action: {
             isLiked.toggle()
         }) {
-            Image(systemName: isLiked ? "heart.fill" : "heart")
-                .foregroundColor(isLiked ? Color.pancoRed : Color.white)
+            Image(systemName: isLiked ? "heart.fill" : "heart.fill")
+                .foregroundColor(isLiked ? Color.pancoRed : Color.pancoNeutral.opacity(0.90))
                 .font(.system(size: 30))
             
         }
