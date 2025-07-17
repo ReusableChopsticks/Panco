@@ -12,11 +12,6 @@ struct ProfileHistoryView: View {
                 .ignoresSafeArea()
             
             VStack(alignment: .leading) {
-                Button("Back", systemImage: "chevron.backward") {}
-                    .foregroundColor(.pancoGreen)
-                    .fontWeight(.semibold)
-                    .padding(.top, 30)
-                    .padding(.leading)
                 
                 Text("History")
                     .fontWeight(.bold)
@@ -28,18 +23,18 @@ struct ProfileHistoryView: View {
                         LazyVStack(spacing: 20) {
                             HistoryCardView(
                                 date:dateWeeksAgo(0),
-                                imageNames: ["Recipe 1", "Recipe 2", "Recipe 3"],
+                                imageNames: ["Steak", "Tuna Fritters", "Stir Fry Beef"],
                                 counts: [1,3,2]
                             )
                             HistoryCardView(
                                 date: dateWeeksAgo(1),
-                                imageNames: ["Recipe 4", "Recipe 5"],
+                                imageNames: ["Tofu Bowl", "Pizza"],
                                 counts: [1,3,]
                             )
                             
                             HistoryCardView(
                                 date: dateWeeksAgo(2),
-                                imageNames: ["Recipe 1", "Recipe 5"],
+                                imageNames: ["Steak", "Pizza"],
                                 counts: [1,3,]
                             )
                         }

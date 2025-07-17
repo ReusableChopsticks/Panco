@@ -33,7 +33,7 @@ struct NavigationTabView: View {
                 }
                 
                 Tab("Preferences", systemImage: "person.fill") {
-                    FavouritesView().environment(recipeManager)
+                    PreferencesView().environment(recipeManager)
                 }
             }
         }

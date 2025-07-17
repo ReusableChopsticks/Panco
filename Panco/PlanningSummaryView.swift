@@ -76,7 +76,7 @@ struct RecipeCardView: View {
             
             VStack {
                 Text(title)
-                    .font(.subheadline)
+                    .font(.title2)
                     .fontWeight(.semibold)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading, 20)

@@ -72,7 +72,7 @@ struct PlanningGroceryView: View {
     
     // Now using Ingredient model directly
     @State private var ingredients: [Ingredient] = [
-        .init(name: "Chicken", amount: 200, unit: "grams"),
+        .init(name: "Chicken", amount: 2, unit: "breasts"),
         .init(name: "Rice", amount: 1, unit: "cup"),
         .init(name: "Onion", amount: 1, unit: "unit"),
         .init(name: "Coriander", amount: 50, unit: "grams"),
