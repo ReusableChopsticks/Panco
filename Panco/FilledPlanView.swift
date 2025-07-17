@@ -158,7 +158,7 @@ struct FilledPlanView: View {
                     .cornerRadius(12)
 
 //                Link is hard coded to fairy bread for now haha
-                Link("View recipe online", destination: URL(string: "https://www.allrecipes.com/recipe/80934/fairy-bread/")!)
+                Link("View recipe online", destination: URL(string: "https://www.jocooks.com/recipes/one-pot-cheesy-chicken-broccoli-rice-casserole/")!)
                     .font(.subheadline)
                     .foregroundColor(.pancoGreen)
                     .padding(.bottom, 8)
