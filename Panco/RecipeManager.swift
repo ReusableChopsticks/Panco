@@ -120,7 +120,7 @@ class PortionModel: Identifiable {
         portion -= 1
     }
 
-    static var sampleData: [PortionModel] = [Panco.PortionModel(recipe: Panco.RecipesResult(id: 716406, title: "Asparagus and Pea Soup: Real Convenience Food", image: "https://img.spoonacular.com/recipes/716406-312x231.jpg", imageType: "jpg"), portion: 1), Panco.PortionModel(recipe: Panco.RecipesResult(id: 716426, title: "Cauliflower, Brown Rice, and Vegetable Fried Rice", image: "https://img.spoonacular.com/recipes/716426-312x231.jpg", imageType: "jpg"), portion: 1)]
+    static var sampleData: [PortionModel] = [Panco.PortionModel(recipe: Panco.RecipesResult(id: 716406, title: "Asparagus and Pea Soup: Real Convenience Food", image: "https://img.spoonacular.com/recipes/716406-312x231.jpg", imageType: "jpg"), portion: 1), Panco.PortionModel(recipe: Panco.RecipesResult(id: 716426, title: "Cauliflower, Brown Rice, and Vegetable Fried Rice", image: "https://img.spoonacular.com/recipes/716426-312x231.jpg", imageType: "jpg"), portion: 1), Panco.PortionModel(recipe: Panco.RecipesResult(id: 716406, title: "Asparagus and Pea Soup: Real Convenience Food", image: "https://img.spoonacular.com/recipes/716406-312x231.jpg", imageType: "jpg"), portion: 1), Panco.PortionModel(recipe: Panco.RecipesResult(id: 716426, title: "Cauliflower, Brown Rice, and Vegetable Fried Rice", image: "https://img.spoonacular.com/recipes/716426-312x231.jpg", imageType: "jpg"), portion: 1)]
 }
 
 struct RecipesResponse: Codable {

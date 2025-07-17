@@ -28,11 +28,6 @@ struct PlanningPortionView: View {
     @Binding var rootIsActive : Bool
     
     var body: some View {
-        //        Button("Debug print") {
-        //            recipeManager.mealPlan.forEach { print($0.portion) }
-        //        }
-        
-        // Background colour
         ZStack {
             Color(.pancoNeutral)
                 .ignoresSafeArea()
@@ -63,30 +58,26 @@ struct PlanningPortionView: View {
                 ZStack {
                     
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        LazyHGrid(rows: rows, spacing: 20) {
+                    ScrollView(showsIndicators: false) {
+                        VStack {
                             ForEach(recipeManager.mealPlan, id: \.id) { portion in
                                 CounterView(recipePortion: portion)
                             }
                         }
                         .padding(.horizontal)
                     }
-                    .padding(.bottom, 250)
                     
-                    
-                    
-                    NavigationLink {
-                        PlanningSummaryView(rootIsActive: $rootIsActive)
-                    } label: {
-                        Text("Continue")
-                            .foregroundColor(.pancoNeutral)
-                            .font(.headline)
-                            .frame(width: 180, height: 60)
-                            .background(Color.pancoGreen)
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                            .shadow(radius: 5)
-                    }
-                    .padding(.top,450)
+                }
+                NavigationLink {
+                    PlanningSummaryView(rootIsActive: $rootIsActive)
+                } label: {
+                    Text("Continue")
+                        .foregroundColor(.pancoNeutral)
+                        .font(.headline)
+                        .frame(width: 180, height: 60)
+                        .background(Color.pancoGreen)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .shadow(radius: 5)
                 }
             }
         }
